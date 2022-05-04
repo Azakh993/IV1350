@@ -52,7 +52,7 @@ class ExternalInventorySystem {
     }
 
     private void setStartingInventory() {
-        this.itemInventory.put("95867956", new Amount(10));
+        this.itemInventory.put("95867956", new Amount(1));
         this.itemInventory.put("24123412", new Amount(5));
         this.itemInventory.put("12312234", new Amount(32));
         this.itemInventory.put("67334553", new Amount(12));

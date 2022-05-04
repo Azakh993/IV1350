@@ -4,6 +4,6 @@ import se.kth.iv1350.posSystem.model.SaleDTO;
 
 class ReceiptPrinter {
     void printReceipt(SaleDTO saleDTO) {
-        System.out.println(saleDTO.toString());
+        // Code here for printing receipt
     }
 }

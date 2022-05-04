@@ -27,10 +27,7 @@ public class View {
         SaleDTO newSale = this.controller.startSale();
         startSalePrinter(newSale);
 
-        SaleDTO basket = this.controller.addItem("24123412");
-        basketPrinter(basket);
-
-        basket = this.controller.addItem("12312234");
+        SaleDTO basket = this.controller.addItem("12312234");
         basketPrinter(basket);
 
         basket = this.controller.addItem("12312234");
@@ -48,19 +45,15 @@ public class View {
         basket = this.controller.addItem("67334553");
         basketPrinter(basket);
 
-        basket = this.controller.addItem("32784623");
-        basketPrinter(basket);
-
         SaleDTO endSale = this.controller.endSale();
         endSalePrinter(endSale);
 
-        System.out.println("[registerPayment(): Amount paid by customer in cash registered]");
-        SaleDTO payment = this.controller.registerPayment(2600);
+        SaleDTO payment = this.controller.registerPayment(2200);
         paymentPrinter(payment);
     }
 
     private void startSalePrinter(SaleDTO saleDTO) {
-        System.out.println("\n\n[startSale(): New sale started]\n");
+        System.out.println("\n\n[startSale()]\n");
     }
 
     private void basketPrinter(SaleDTO saleDTO) {
@@ -68,17 +61,19 @@ public class View {
         String itemIDOfLastRegisteredItem = lastRegisteredItem.getItemID();
         Amount qtyOfLastRegisteredItem = saleDTO.getItemsInBasket().get(lastRegisteredItem);
 
-        System.out.println("[addItem(): itemID '" + itemIDOfLastRegisteredItem + "' entered]\n");
+        System.out.println("[addItem('" + itemIDOfLastRegisteredItem + "')]");
         System.out.println(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
         System.out.printf("Running total (including VAT): " + getTotalPrice(saleDTO) + "\n\n");
     }
 
     private void endSalePrinter(SaleDTO saleDTO) {
-        System.out.println("[endSale(): Item registration complete]");
+        System.out.println("[endSale()]");
         System.out.printf("Total Price (including VAT): " + getTotalPrice(saleDTO) + "\n\n");
     }
 
     private void paymentPrinter(SaleDTO saleDTO) {
+        System.out.println("[registerPayment(2200)]");
+        System.out.println("[printReceipt(saleDTO)]");
         System.out.printf("Change: " + saleDTO.getChange() + " \n\n");
     }
 

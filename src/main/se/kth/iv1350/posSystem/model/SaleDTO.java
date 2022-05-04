@@ -98,7 +98,7 @@ public class SaleDTO {
      */
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\n\n");
+        stringBuilder.append("\n");
         stringBuilder.append("\t\tRECEIPT\n\n");
         stringBuilder.append(getTimeAndDateOfSale());
         stringBuilder.append("\n\n");
