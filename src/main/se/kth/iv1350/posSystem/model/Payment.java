@@ -1,8 +1,8 @@
 package se.kth.iv1350.posSystem.model;
 
+import se.kth.iv1350.posSystem.utilities.Amount;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import se.kth.iv1350.posSystem.utilities.Amount;
 
 /**
  * Manages payment aspects of a sale instance
@@ -23,7 +23,7 @@ public class Payment {
     /**
      * Sets the amount paid and the change, based on the final price of the sale
      *
-     * @param amountPaid The amount paid in cash
+     * @param amountPaid  The amount paid in cash
      * @param amountToPay The total price for all items in basket
      */
     public void setAmountPaidAndChange(Amount amountPaid, Amount amountToPay) {

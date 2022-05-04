@@ -1,6 +1,5 @@
 package se.kth.iv1350.posSystem.model;
 
-import se.kth.iv1350.posSystem.integration.ItemDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
 import java.util.LinkedHashMap;

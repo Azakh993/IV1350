@@ -1,19 +1,19 @@
 package se.kth.iv1350.posSystem.controller;
 
-import se.kth.iv1350.posSystem.utilities.Amount;
 import se.kth.iv1350.posSystem.integration.SystemHandler;
 import se.kth.iv1350.posSystem.model.Basket;
 import se.kth.iv1350.posSystem.model.Payment;
 import se.kth.iv1350.posSystem.model.SaleDTO;
+import se.kth.iv1350.posSystem.utilities.Amount;
 
 /**
  * Represents the controller of the program
  * All calls to the model and integration layer occur via this class
  */
 public class Controller {
+    private final SystemHandler systemHandler;
     private Basket basket;
     private Payment payment;
-    private final SystemHandler systemHandler;
     private SaleDTO saleDTO;
 
     /**

@@ -3,7 +3,6 @@ package se.kth.iv1350.posSystem.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import se.kth.iv1350.posSystem.integration.ItemDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
 import java.util.LinkedHashMap;

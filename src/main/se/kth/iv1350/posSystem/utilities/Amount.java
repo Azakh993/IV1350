@@ -1,7 +1,5 @@
 package se.kth.iv1350.posSystem.utilities;
 
-import java.util.Objects;
-
 /**
  * Represents various types of amounts involved in the program
  */

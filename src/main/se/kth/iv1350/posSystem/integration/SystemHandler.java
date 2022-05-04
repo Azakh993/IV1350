@@ -1,5 +1,6 @@
 package se.kth.iv1350.posSystem.integration;
 
+import se.kth.iv1350.posSystem.model.ItemDTO;
 import se.kth.iv1350.posSystem.model.SaleDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 

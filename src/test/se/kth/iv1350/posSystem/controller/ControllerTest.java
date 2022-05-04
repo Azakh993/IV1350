@@ -1,10 +1,7 @@
 package se.kth.iv1350.posSystem.controller;
 
 import org.junit.jupiter.api.*;
-import se.kth.iv1350.posSystem.integration.ItemDTO;
 import se.kth.iv1350.posSystem.integration.SystemHandler;
-import se.kth.iv1350.posSystem.model.Basket;
-import se.kth.iv1350.posSystem.model.Payment;
 import se.kth.iv1350.posSystem.model.SaleDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
