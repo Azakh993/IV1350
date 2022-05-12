@@ -15,7 +15,10 @@ class ExternalInventorySystem {
         setStartingInventory();
     }
 
-    ItemDTO getItem(String itemID) {
+    ItemDTO getItem(String itemID) throws InvalidItemIdentifierException {
+        if(!itemCatalogue.containsKey(itemID))
+            throw new InvalidItemIdentifierException(itemID);
+
         return this.itemCatalogue.get(itemID);
     }
 
