@@ -31,7 +31,7 @@ class ExternalInventorySystemTest {
     }
 
     @Test
-    void setItemInventory() {
+    void testSetItemInventory() {
         ItemDTO testItemDTO = new ItemDTO("95867956", "Apple Keyboard",
                 new Amount(1499), new Amount(0.25));
         this.basket.setItemInBasket(testItemDTO);
@@ -43,7 +43,7 @@ class ExternalInventorySystemTest {
     }
 
     @Test
-    void setItemInventorySoStockGetsNegative() {
+    void testSetItemInventorySoStockGetsNegative() {
         ItemDTO testItemDTO = new ItemDTO("95867956", "Apple Keyboard",
                 new Amount(1499), new Amount(0.25));
         this.basket.setItemInBasket(testItemDTO);
