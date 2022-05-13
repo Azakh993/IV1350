@@ -13,21 +13,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class SystemHandlerTest {
     private SystemHandler systemHandler;
-    private Basket basket;
-    private Payment payment;
 
     @BeforeEach
     void setUp() {
         this.systemHandler = new SystemHandler();
-        this.basket = new Basket();
-        this.payment = new Payment();
     }
 
     @AfterEach
     void tearDown() {
         this.systemHandler = null;
-        this.basket = null;
-        this.payment = null;
     }
 
     @Test
@@ -72,40 +66,6 @@ class SystemHandlerTest {
             fail("ItemIdentifierException thrown incorrectly.");
         } catch (ExternalSystemException exception) {
             fail("ExternalSystemException thrown incorrectly.");
-        }
-    }
-
-    @Test
-    void testPrintReceiptWithoutPrinterConnection() {
-        String connectionFailureSimulatingItemID = "404X";
-        String expectedResult = "Could not establish contact with 'ReceiptPrinter'!";
-
-        try {
-            ItemDTO testItemDTO = this.systemHandler.fetchItem(connectionFailureSimulatingItemID);
-            this.basket.setItemInBasket(testItemDTO);
-            SaleDTO saleDTO = new SaleDTO(this.payment, this.basket);
-            this.systemHandler.printReceipt(saleDTO);
-            fail("ReceiptPrinter printed receipt without a functioning connection.");
-        } catch (ItemIdentifierException exception) {
-            fail("ItemIdentifierException incorrectly thrown; item is valid item.");
-        } catch (ExternalSystemException exception) {
-            assertEquals(expectedResult, exception.getMessage(), "Exception message mismatch.");
-        }
-    }
-
-    @Test
-    void testPrintReceipt() {
-        String validItemID = "95867956";
-
-        try {
-            ItemDTO testItemDTO = this.systemHandler.fetchItem(validItemID);
-            this.basket.setItemInBasket(testItemDTO);
-            SaleDTO saleDTO = new SaleDTO(this.payment, this.basket);
-            this.systemHandler.printReceipt(saleDTO);
-        } catch (ItemIdentifierException exception) {
-            fail("ItemIdentifierException incorrectly thrown; item is valid item.");
-        } catch (ExternalSystemException exception) {
-            fail("ExternalSystemException incorrectly thrown; ReceiptPrinter is connected.");
         }
     }
 }
