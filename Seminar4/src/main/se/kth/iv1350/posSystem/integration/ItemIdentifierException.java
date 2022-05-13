@@ -12,7 +12,7 @@ public class ItemIdentifierException extends Exception {
      * @param invalidItemID The invalid item identifier.
      */
     public ItemIdentifierException(String invalidItemID) {
-        super("Item identifier '" + invalidItemID + "' not found in item catalogue!");
+        super("Item identifier '" + invalidItemID + "' is invalid!");
         this.invalidItemID = invalidItemID;
     }
 
