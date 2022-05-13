@@ -27,7 +27,7 @@ class SystemHandlerTest {
     @Test
     void testFetchItemWithInvalidItemIdentifier() {
         String invalidItemID = "ABC";
-        String expectedResult = "Item identifier '" + invalidItemID + "' not found in item catalogue!";
+        String expectedResult = "Item identifier '" + invalidItemID + "' is invalid!";
 
         try {
             this.systemHandler.fetchItem(invalidItemID);
