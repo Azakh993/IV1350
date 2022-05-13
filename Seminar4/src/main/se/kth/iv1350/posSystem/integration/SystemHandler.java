@@ -52,9 +52,8 @@ public class SystemHandler {
      * Forwards receipt data to receipt printer for printing
      *
      * @param saleDTO The receipt information
-     * @throws ExternalSystemException if the external system cannot be reached
      */
-    public void printReceipt(SaleDTO saleDTO) throws ExternalSystemException {
+    public void printReceipt(SaleDTO saleDTO) {
         this.receiptPrinter.printReceipt(saleDTO);
     }
 

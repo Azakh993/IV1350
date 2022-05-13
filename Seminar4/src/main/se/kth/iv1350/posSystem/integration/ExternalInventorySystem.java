@@ -55,8 +55,6 @@ class ExternalInventorySystem {
                 new Amount(23), new Amount(0.12)));
         this.itemCatalogue.put("32784623", new ItemDTO("32784623", "USB Wired Mouse",
                 new Amount(99), new Amount(0.25)));
-        this.itemCatalogue.put("404X", new ItemDTO("404X", "ConnectionFailure",
-                new Amount(0), new Amount(0)));
     }
 
     private void setStartingInventory() {
@@ -65,6 +63,5 @@ class ExternalInventorySystem {
         this.itemInventory.put("12312234", new Amount(32));
         this.itemInventory.put("67334553", new Amount(12));
         this.itemInventory.put("32784623", new Amount(3));
-        this.itemInventory.put("404X", new Amount(1));
     }
 }

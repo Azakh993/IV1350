@@ -29,13 +29,11 @@ public class Controller {
     /**
      * Starts a new sale
      * Calls for creation of <code>Payment</code> and <code>Basket</code>
-     *
-     * @return The latest instance of <code>SaleDTO</code>
      */
-    public SaleDTO startSale() {
+    public void startSale() {
         this.payment = new Payment();
         this.basket = new Basket();
-        return updateSaleDTO();
+        updateSaleDTO();
     }
 
     /**
@@ -79,23 +77,17 @@ public class Controller {
      * @param amountPaidInCash The amount paid by customer in cash
      * @return The latest instance of <code>SaleDTO</code>
      * @throws IllegalStateException if the method is called before <code>addItem</code>
-     * @throws OperationFailedException if <code>ReceiptPrinter</code> cannot be connected to
      */
-    public SaleDTO registerPayment(double amountPaidInCash) throws OperationFailedException {
+    public SaleDTO registerPayment(double amountPaidInCash) {
         if (this.saleDTO.getTotalPrice() == null)
             throw new IllegalStateException("Attempt to register payment before adding any item.");
 
-        try {
-            Amount amountPaid = new Amount(amountPaidInCash);
-            updateAmountPaidAndChange(amountPaid, this.saleDTO.getTotalPrice());
-            updateCashInRegister();
-            updateSaleDTO();
-            generateReceipt();
-        } catch (ExternalSystemException exception) {
-            throw new OperationFailedException("Could not print receipt because printer is not connected.", exception);
-        } finally {
-            updateLogs();
-        }
+        Amount amountPaid = new Amount(amountPaidInCash);
+        updateAmountPaidAndChange(amountPaid, this.saleDTO.getTotalPrice());
+        updateCashInRegister();
+        updateSaleDTO();
+        generateReceipt();
+        updateLogs();
         return this.saleDTO;
     }
 
@@ -111,7 +103,7 @@ public class Controller {
         this.systemHandler.addCashToRegister(this.saleDTO);
     }
 
-    private void generateReceipt() throws ExternalSystemException {
+    private void generateReceipt() {
         this.systemHandler.printReceipt(this.saleDTO);
     }
 
