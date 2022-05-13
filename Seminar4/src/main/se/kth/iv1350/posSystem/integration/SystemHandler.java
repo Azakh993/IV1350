@@ -32,8 +32,10 @@ public class SystemHandler {
      *
      * @param itemID The unique item identifier of an item
      * @return The item instance representing an item with the provided item identifier
+     * @throws ItemIdentifierException if the registered item identifier is invalid
+     * @throws ExternalSystemException if the external system cannot be reached
      */
-    public ItemDTO fetchItem(String itemID) {
+    public ItemDTO fetchItem(String itemID) throws ItemIdentifierException, ExternalSystemException {
         return this.externalInventorySystem.getItem(itemID);
     }
 
@@ -50,8 +52,9 @@ public class SystemHandler {
      * Forwards receipt data to receipt printer for printing
      *
      * @param saleDTO The receipt information
+     * @throws ExternalSystemException if the external system cannot be reached
      */
-    public void printReceipt(SaleDTO saleDTO) {
+    public void printReceipt(SaleDTO saleDTO) throws ExternalSystemException {
         this.receiptPrinter.printReceipt(saleDTO);
     }
 
