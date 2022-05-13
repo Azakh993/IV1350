@@ -79,8 +79,8 @@ public class Controller {
      * @throws IllegalStateException if the method is called before <code>addItem</code>
      */
     public SaleDTO registerPayment(double amountPaidInCash) {
-        if (this.saleDTO.getTotalPrice() == null)
-            throw new IllegalStateException("Attempt to register payment before adding any item.");
+        if (this.saleDTO == null)
+            throw new IllegalStateException("Attempt to register payment before starting new sale.");
 
         Amount amountPaid = new Amount(amountPaidInCash);
         updateAmountPaidAndChange(amountPaid, this.saleDTO.getTotalPrice());
