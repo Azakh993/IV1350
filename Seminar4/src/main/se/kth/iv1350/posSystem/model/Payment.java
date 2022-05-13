@@ -13,14 +13,6 @@ public class Payment {
     private Amount change;
 
     /**
-     * Creates a new Payment object
-     * Registers time of creation
-     */
-    public Payment() {
-        setTimeAndDateOfSale();
-    }
-
-    /**
      * Sets the amount paid and the change, based on the final price of the sale
      *
      * @param amountPaid  The amount paid in cash
@@ -29,6 +21,7 @@ public class Payment {
     public void setAmountPaidAndChange(Amount amountPaid, Amount amountToPay) {
         this.setAmountPaid(amountPaid);
         this.setChange(amountToPay);
+        setTimeAndDateOfSale();
     }
 
     String getTimeAndDateOfSale() {
