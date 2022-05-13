@@ -1,5 +1,7 @@
 package se.kth.iv1350.posSystem.controller;
 
+import se.kth.iv1350.posSystem.integration.ExternalSystemException;
+import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
 import se.kth.iv1350.posSystem.integration.SystemHandler;
 import se.kth.iv1350.posSystem.model.Basket;
 import se.kth.iv1350.posSystem.model.Payment;
@@ -17,8 +19,8 @@ public class Controller {
     private SaleDTO saleDTO;
 
     /**
-     * Creates a new Controller object
-     * Calls for creation of a new SystemHandler object
+     * Creates a new <code>Controller</code> object
+     * Calls for creation of a new <code>SystemHandler</code> object
      */
     public Controller() {
         this.systemHandler = new SystemHandler();
@@ -26,9 +28,9 @@ public class Controller {
 
     /**
      * Starts a new sale
-     * Calls for creation of payment and Basket
+     * Calls for creation of <code>Payment</code> and <code>Basket</code>
      *
-     * @return The latest instance of SaleDTO
+     * @return The latest instance of <code>SaleDTO</code>
      */
     public SaleDTO startSale() {
         this.payment = new Payment();
@@ -38,22 +40,35 @@ public class Controller {
 
     /**
      * Retrieves item information and stores the information in basket
-     * Updates items in basket, running total and total VAT
+     * Updates <code>ItemsInBasket</code>, <code>totalPrice</code> and <code>totalVAT</code>
      *
      * @param itemID The unique identifier for an item
-     * @return The latest instance of SaleDTO
+     * @return The latest instance of <code>SaleDTO</code>
+     * @throws OperationFailedException if the <code>ExternalInventorySystem</code> cannot be contacted
+     * @throws ItemIdentifierException if provided <code>itemID</code> is invalid
+     * @throws IllegalStateException if the method is called before <code>startSale</code>
      */
-    public SaleDTO addItem(String itemID) {
-        this.basket.setItemInBasket(this.systemHandler.fetchItem(itemID));
+    public SaleDTO addItem(String itemID) throws OperationFailedException, ItemIdentifierException {
+        if (this.saleDTO == null)
+            throw new IllegalStateException("Attempt to register item before starting a new sale.");
+        try {
+            this.basket.setItemInBasket(this.systemHandler.fetchItem(itemID));
+        } catch (ExternalSystemException exception) {
+            throw new OperationFailedException("Could not register item. Please try again.", exception);
+        }
         return updateSaleDTO();
     }
 
     /**
      * Marks the end of item registration
      *
-     * @return The latest instance of SaleDTO
+     * @return The latest instance of <code>SaleDTO</code>
+     * @throws IllegalStateException if the method is called before <code>startSale</code>
      */
     public SaleDTO endSale() {
+        if (this.saleDTO == null)
+            throw new IllegalStateException("Attempt to end sale before starting a new sale.");
+
         return this.saleDTO;
     }
 
@@ -62,15 +77,25 @@ public class Controller {
      * Updates inventory and transaction logs
      *
      * @param amountPaidInCash The amount paid by customer in cash
-     * @return The latest instance of SaleDTO
+     * @return The latest instance of <code>SaleDTO</code>
+     * @throws IllegalStateException if the method is called before <code>addItem</code>
+     * @throws OperationFailedException if <code>ReceiptPrinter</code> cannot be connected to
      */
-    public SaleDTO registerPayment(double amountPaidInCash) {
-        Amount amountPaid = new Amount(amountPaidInCash);
-        updateAmountPaidAndChange(amountPaid, this.saleDTO.getTotalPrice());
-        updateCashInRegister(amountPaid);
-        updateSaleDTO();
-        generateReceipt();
-        updateLogs();
+    public SaleDTO registerPayment(double amountPaidInCash) throws OperationFailedException {
+        if (this.saleDTO.getTotalPrice() == null)
+            throw new IllegalStateException("Attempt to register payment before adding any item.");
+
+        try {
+            Amount amountPaid = new Amount(amountPaidInCash);
+            updateAmountPaidAndChange(amountPaid, this.saleDTO.getTotalPrice());
+            updateCashInRegister();
+            updateSaleDTO();
+            generateReceipt();
+        } catch (ExternalSystemException exception) {
+            throw new OperationFailedException("Could not print receipt because printer is not connected.", exception);
+        } finally {
+            updateLogs();
+        }
         return this.saleDTO;
     }
 
@@ -82,11 +107,11 @@ public class Controller {
         this.payment.setAmountPaidAndChange(amountPaid, amountToPay);
     }
 
-    private void updateCashInRegister(Amount amountPaid) {
+    private void updateCashInRegister() {
         this.systemHandler.addCashToRegister(this.saleDTO);
     }
 
-    private void generateReceipt() {
+    private void generateReceipt() throws ExternalSystemException {
         this.systemHandler.printReceipt(this.saleDTO);
     }
 
