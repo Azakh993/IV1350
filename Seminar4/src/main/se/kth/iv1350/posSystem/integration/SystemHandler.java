@@ -4,6 +4,9 @@ import se.kth.iv1350.posSystem.model.ItemDTO;
 import se.kth.iv1350.posSystem.model.SaleDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents the handler of external systems, databases and the sale log
  */
@@ -13,6 +16,8 @@ public class SystemHandler {
     private final CashRegister cashRegister;
     private final ReceiptPrinter receiptPrinter;
     private final SaleLog saleLog;
+    private final List<SaleLogObserver> saleLogObserversList = new ArrayList<>();
+
 
     /**
      * Creates an instance of SystemHandler
@@ -63,8 +68,34 @@ public class SystemHandler {
      * @param saleDTO The sale data, containing all information on the transaction
      */
     public void updateLogs(SaleDTO saleDTO) {
-        this.saleLog.setSaleInstance(saleDTO);
         this.externalInventorySystem.setItemInventory(saleDTO);
         this.externalAccountingSystem.setPaymentRecords(saleDTO);
+        this.saleLog.setSaleInstance(saleDTO);
+        notifyObservers();
+    }
+
+    /**
+     * The observers to notify when transaction has been finalized.
+     *
+     * @param saleLogObserversList The list of observers that should be notified.
+     */
+    public void addSaleLogObservers(List<SaleLogObserver> saleLogObserversList) {
+        this.saleLogObserversList.addAll(saleLogObserversList);
+    }
+
+    /**
+     * The observer to notify when transaction has been finalized.
+     *
+     * @param saleLogObserver The observer that should be notified.
+     */
+    public void addSaleLogObserver(SaleLogObserver saleLogObserver) {
+        saleLogObserversList.add(saleLogObserver);
+    }
+
+    private void notifyObservers() {
+        SaleDTO latestSaleDTO = this.saleLog.getTransactionsList().getLast();
+        for (SaleLogObserver saleLogObserver : saleLogObserversList) {
+            saleLogObserver.updateLogs(latestSaleDTO);
+        }
     }
 }
