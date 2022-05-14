@@ -1,15 +1,18 @@
 package se.kth.iv1350.posSystem.view;
 
 import se.kth.iv1350.posSystem.controller.Controller;
-import se.kth.iv1350.posSystem.model.ItemDTO;
+import se.kth.iv1350.posSystem.controller.OperationFailedException;
+import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
 import se.kth.iv1350.posSystem.model.SaleDTO;
-import se.kth.iv1350.posSystem.utilities.Amount;
+import se.kth.iv1350.posSystem.utilities.LogHandler;
 
 /**
  * Represents the only view of the program
  */
 public class View {
     private final Controller controller;
+    private final OutputFormatter outputFormatter;
+    private final LogHandler logHandler;
 
     /**
      * Creates a new instance of view
@@ -18,66 +21,73 @@ public class View {
      */
     public View(Controller controller) {
         this.controller = controller;
+        this.outputFormatter = new OutputFormatter();
+        this.logHandler = new LogHandler();
     }
 
     /**
      * Launches a sample sale to test and illustrate program functionality
      */
-    public void standardSale() {
-        SaleDTO newSale = this.controller.startSale();
-        startSalePrinter(newSale);
-
-        SaleDTO basket = this.controller.addItem("12312234");
-        basketPrinter(basket);
-
-        basket = this.controller.addItem("12312234");
-        basketPrinter(basket);
-
-        basket = this.controller.addItem("95867956");
-        basketPrinter(basket);
-
-        basket = this.controller.addItem("67334553");
-        basketPrinter(basket);
-
-        basket = this.controller.addItem("12312234");
-        basketPrinter(basket);
-
-        basket = this.controller.addItem("67334553");
-        basketPrinter(basket);
-
-        SaleDTO endSale = this.controller.endSale();
-        endSalePrinter(endSale);
-
-        SaleDTO payment = this.controller.registerPayment(2200);
-        paymentPrinter(payment);
+    public void sampleSale() {
+        try {
+            startSalePrinter();
+            addSelectItemsToBasket();
+            endSalePrinter(this.controller.endSale());
+            paymentPrinter(this.controller.registerPayment(1800));
+        } catch (Exception exception) {
+            handleException(exception);
+        }
     }
 
-    private void startSalePrinter(SaleDTO saleDTO) {
-        System.out.println("\n\n[startSale()]\n");
+    private void addSelectItemsToBasket() {
+        try {
+            basketPrinter(this.controller.addItem("95867956"));
+            try {
+                System.out.println("[addItem('1231223'), an invalid item identifier]");
+                basketPrinter(this.controller.addItem("1231223"));
+            } catch (ItemIdentifierException exception) {
+                exceptionMessagePrinter(exception);
+            }
+
+            basketPrinter(this.controller.addItem("12312234"));
+            basketPrinter(this.controller.addItem("67334553"));
+            try {
+                System.out.println("[addItem('404'), simulates connection failure]");
+                basketPrinter(this.controller.addItem("404"));
+            } catch (OperationFailedException exception) {
+                handleException(exception);
+            }
+
+            basketPrinter(this.controller.addItem("67334553"));
+        } catch (ItemIdentifierException | OperationFailedException exception) {
+            handleException(exception);
+        }
+    }
+
+    private void startSalePrinter() {
+        this.outputFormatter.startSaleFormatter();
+        this.controller.startSale();
     }
 
     private void basketPrinter(SaleDTO saleDTO) {
-        ItemDTO lastRegisteredItem = saleDTO.getLastRegisteredItem();
-        String itemIDOfLastRegisteredItem = lastRegisteredItem.getItemID();
-        Amount qtyOfLastRegisteredItem = saleDTO.getItemsInBasket().get(lastRegisteredItem);
-
-        System.out.println("[addItem('" + itemIDOfLastRegisteredItem + "')]");
-        System.out.println(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
-        System.out.printf("Running total (including VAT): " + getTotalPrice(saleDTO) + "\n\n");
+        this.outputFormatter.newItemEntryFormatter(saleDTO);
     }
 
     private void endSalePrinter(SaleDTO saleDTO) {
-        System.out.println("[endSale()]");
-        System.out.printf("Total Price (including VAT): " + getTotalPrice(saleDTO) + "\n\n");
+        this.outputFormatter.endSaleFormatter(saleDTO);
     }
 
     private void paymentPrinter(SaleDTO saleDTO) {
-        System.out.println("[registerPayment(2200)]");
-        System.out.println("[printReceipt(saleDTO)]");
-        System.out.printf("Change: " + saleDTO.getChange() + " \n\n");
+        this.outputFormatter.paymentFormatter(saleDTO);
     }
 
-    private Amount getTotalPrice(SaleDTO saleDTO) {
-        return saleDTO.getTotalPrice();
+    private void handleException(Exception exception) {
+        exceptionMessagePrinter(exception);
+        String formattedLogEntry = this.outputFormatter.exceptionLogEntryFormatter(exception);
+        logHandler.addExceptionToLog(formattedLogEntry);
+    }
+
+    private void exceptionMessagePrinter(Exception exception) {
+        System.out.println(this.outputFormatter.exceptionMessageFormatter(exception));
     }
 }
