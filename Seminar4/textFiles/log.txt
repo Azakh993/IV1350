@@ -1,13 +1,13 @@
-13:16 14-05-2022
+01:31 15-05-2022
 se.kth.iv1350.posSystem.controller.OperationFailedException: Could not register item. Please try again.
-	at se.kth.iv1350.posSystem.controller.Controller.addItem(Controller.java:55)
-	at se.kth.iv1350.posSystem.view.View.addSelectItemsToBasket(View.java:56)
-	at se.kth.iv1350.posSystem.view.View.sampleSale(View.java:34)
+	at se.kth.iv1350.posSystem.controller.Controller.addItem(Controller.java:62)
+	at se.kth.iv1350.posSystem.view.View.addItemSimulatingExternalSystemConnectionFailure(View.java:55)
+	at se.kth.iv1350.posSystem.view.View.sampleSale(View.java:43)
 	at se.kth.iv1350.posSystem.startup.Main.main(Main.java:20)
 Caused by: se.kth.iv1350.posSystem.integration.ExternalSystemException: Could not establish contact with 'ExternalInventorySystem'!
 	at se.kth.iv1350.posSystem.integration.ExternalInventorySystem.getItem(ExternalInventorySystem.java:20)
-	at se.kth.iv1350.posSystem.integration.SystemHandler.fetchItem(SystemHandler.java:39)
-	at se.kth.iv1350.posSystem.controller.Controller.addItem(Controller.java:53)
+	at se.kth.iv1350.posSystem.integration.SystemHandler.fetchItem(SystemHandler.java:44)
+	at se.kth.iv1350.posSystem.controller.Controller.addItem(Controller.java:60)
 	... 3 more
 
 
