@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
-import se.kth.iv1350.posSystem.integration.SystemHandler;
 import se.kth.iv1350.posSystem.model.SaleDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
