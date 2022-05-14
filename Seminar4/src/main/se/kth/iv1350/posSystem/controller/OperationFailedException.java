@@ -7,8 +7,9 @@ public class OperationFailedException extends Exception {
 
     /**
      * Creates a new instance with an error message and triggering exception.
+     *
      * @param errorMessage The error message.
-     * @param cause The causative exception.
+     * @param cause        The causative exception.
      */
     public OperationFailedException(String errorMessage, Exception cause) {
         super(errorMessage, cause);
