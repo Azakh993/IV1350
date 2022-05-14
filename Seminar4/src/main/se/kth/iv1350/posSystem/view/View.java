@@ -3,7 +3,9 @@ package se.kth.iv1350.posSystem.view;
 import se.kth.iv1350.posSystem.controller.Controller;
 import se.kth.iv1350.posSystem.controller.OperationFailedException;
 import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
+import se.kth.iv1350.posSystem.model.ItemDTO;
 import se.kth.iv1350.posSystem.model.SaleDTO;
+import se.kth.iv1350.posSystem.utilities.Amount;
 import se.kth.iv1350.posSystem.utilities.FileLogger;
 
 /**
@@ -11,7 +13,7 @@ import se.kth.iv1350.posSystem.utilities.FileLogger;
  */
 public class View {
     private final Controller controller;
-    private final OutputFormatter outputFormatter;
+    private final ExceptionFormatter exceptionFormatter;
     private final static String LOG_FILE_PATH = "Seminar4/textFiles/log.txt";
     private final FileLogger exceptionLogger;
 
@@ -22,7 +24,9 @@ public class View {
      */
     public View(Controller controller) {
         this.controller = controller;
-        this.outputFormatter = new OutputFormatter();
+        this.controller.addSaleLogObserver(new TotalRevenueView());
+        this.controller.addSaleLogObserver(new TotalRevenueFileOutput());
+        this.exceptionFormatter = new ExceptionFormatter();
         this.exceptionLogger = new FileLogger(LOG_FILE_PATH);
     }
 
@@ -74,29 +78,38 @@ public class View {
     }
 
     private void startSalePrinter() {
-        this.outputFormatter.startSaleFormatter();
+        System.out.println("\n\n[startSale()]\n");
         this.controller.startSale();
     }
 
     private void basketPrinter(SaleDTO saleDTO) {
-        this.outputFormatter.newItemEntryFormatter(saleDTO);
+        ItemDTO lastRegisteredItem = saleDTO.getLastRegisteredItem();
+        String itemIDOfLastRegisteredItem = lastRegisteredItem.getItemID();
+        Amount qtyOfLastRegisteredItem = saleDTO.getItemsInBasket().get(lastRegisteredItem);
+
+        System.out.println("[addItem('" + itemIDOfLastRegisteredItem + "')]");
+        System.out.println(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
+        System.out.printf("Running total (including VAT): " + saleDTO.getTotalPrice() + "\n\n");
     }
 
     private void endSalePrinter(SaleDTO saleDTO) {
-        this.outputFormatter.endSaleFormatter(saleDTO);
+        System.out.println("[endSale()]");
+        System.out.printf("Total Price (including VAT): " + saleDTO.getTotalPrice() + "\n\n");
     }
 
     private void paymentPrinter(SaleDTO saleDTO) {
-        this.outputFormatter.paymentFormatter(saleDTO);
+        System.out.println("[registerPayment(1800)]");
+        System.out.println("[printReceipt(saleDTO)]");
+        System.out.printf("Change: " + saleDTO.getChange() + " \n\n");
     }
 
     private void handleException(Exception exception) {
         exceptionMessagePrinter(exception);
-        String formattedLogEntry = this.outputFormatter.exceptionLogEntryFormatter(exception);
+        String formattedLogEntry = this.exceptionFormatter.exceptionLogEntryFormatter(exception);
         exceptionLogger.addEntryToLog(formattedLogEntry);
     }
 
     private void exceptionMessagePrinter(Exception exception) {
-        System.out.println(this.outputFormatter.exceptionMessageFormatter(exception));
+        System.out.println(this.exceptionFormatter.exceptionMessageFormatter(exception));
     }
 }
