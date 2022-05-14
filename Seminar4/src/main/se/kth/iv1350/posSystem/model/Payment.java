@@ -1,14 +1,13 @@
 package se.kth.iv1350.posSystem.model;
 
 import se.kth.iv1350.posSystem.utilities.Amount;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import se.kth.iv1350.posSystem.utilities.TimeAndDate;
 
 /**
  * Manages payment aspects of a sale instance
  */
 public class Payment {
-    private String timeAndDateOfSale;
+    private TimeAndDate timeAndDateOfSale;
     private Amount amountPaid;
     private Amount change;
 
@@ -21,10 +20,10 @@ public class Payment {
     public void setAmountPaidAndChange(Amount amountPaid, Amount amountToPay) {
         this.setAmountPaid(amountPaid);
         this.setChange(amountToPay);
-        setTimeAndDateOfSale();
+        timeAndDateOfSale = new TimeAndDate();
     }
 
-    String getTimeAndDateOfSale() {
+    TimeAndDate getTimeAndDateOfSale() {
         return this.timeAndDateOfSale;
     }
 
@@ -42,11 +41,5 @@ public class Payment {
 
     void setChange(Amount amountToPay) {
         this.change = this.amountPaid.minus(amountToPay);
-    }
-
-    private void setTimeAndDateOfSale() {
-        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        this.timeAndDateOfSale = dateTimeFormat.format(now);
     }
 }
