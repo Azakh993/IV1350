@@ -1,6 +1,7 @@
 package se.kth.iv1350.posSystem.model;
 
 import se.kth.iv1350.posSystem.utilities.Amount;
+import se.kth.iv1350.posSystem.utilities.TimeAndDate;
 
 import java.util.LinkedHashMap;
 
@@ -9,7 +10,7 @@ import java.util.LinkedHashMap;
  */
 public class SaleDTO {
 
-    private final String timeAndDateOfSale;
+    private final TimeAndDate timeAndDateOfSale;
     private final LinkedHashMap<ItemDTO, Amount> itemsInBasket;
     private final ItemDTO lastRegisteredItem;
     private final Amount totalPrice;
@@ -38,7 +39,7 @@ public class SaleDTO {
      *
      * @return The time and date of the sale
      */
-    public String getTimeAndDateOfSale() {
+    public TimeAndDate getTimeAndDateOfSale() {
         return this.timeAndDateOfSale;
     }
 
