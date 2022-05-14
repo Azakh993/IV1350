@@ -27,10 +27,10 @@ public class FileLogger {
     /**
      * Adds the formatted log entry to the text file
      *
-     * @param formattedLogEntry The formatted log entry
+     * @param logEntry The formatted log entry
      */
-    public void addEntryToLog(String formattedLogEntry) {
-        textFile.println(formattedLogEntry);
+    public void addEntryToLog(String logEntry) {
+        textFile.println(logEntry);
         textFile.close();
     }
 }
