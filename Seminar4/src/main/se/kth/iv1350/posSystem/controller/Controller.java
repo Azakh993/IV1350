@@ -43,8 +43,8 @@ public class Controller {
      * @param itemID The unique identifier for an item
      * @return The latest instance of <code>SaleDTO</code>
      * @throws OperationFailedException if the <code>ExternalInventorySystem</code> cannot be contacted
-     * @throws ItemIdentifierException if provided <code>itemID</code> is invalid
-     * @throws IllegalStateException if the method is called before <code>startSale</code>
+     * @throws ItemIdentifierException  if provided <code>itemID</code> is invalid
+     * @throws IllegalStateException    if the method is called before <code>startSale</code>
      */
     public SaleDTO addItem(String itemID) throws OperationFailedException, ItemIdentifierException {
         if (this.saleDTO == null)
