@@ -7,11 +7,11 @@ import java.util.LinkedList;
 class ExternalAccountingSystem {
     private final LinkedList<SaleDTO> paymentRecords = new LinkedList<>();
 
-    void setPaymentRecords(SaleDTO saleDTO) {
-        this.paymentRecords.add(saleDTO);
+    LinkedList<SaleDTO> getPaymentRecords() {
+        return this.paymentRecords;
     }
 
-    LinkedList<SaleDTO> getpaymentRecords() {
-        return this.paymentRecords;
+    void setPaymentRecords(SaleDTO saleDTO) {
+        this.paymentRecords.add(saleDTO);
     }
 }
