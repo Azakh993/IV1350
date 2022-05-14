@@ -2,11 +2,15 @@ package se.kth.iv1350.posSystem.controller;
 
 import se.kth.iv1350.posSystem.integration.ExternalSystemException;
 import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
+import se.kth.iv1350.posSystem.integration.SaleLogObserver;
 import se.kth.iv1350.posSystem.integration.SystemHandler;
 import se.kth.iv1350.posSystem.model.Basket;
 import se.kth.iv1350.posSystem.model.Payment;
 import se.kth.iv1350.posSystem.model.SaleDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the controller of the program
@@ -17,6 +21,8 @@ public class Controller {
     private Basket basket;
     private Payment payment;
     private SaleDTO saleDTO;
+    private final List<SaleLogObserver> saleLogObserversList = new ArrayList<>();
+
 
     /**
      * Creates a new <code>Controller</code> object
@@ -31,6 +37,7 @@ public class Controller {
      * Calls for creation of <code>Payment</code> and <code>Basket</code>
      */
     public void startSale() {
+        this.systemHandler.addSaleLogObservers(saleLogObserversList);
         this.payment = new Payment();
         this.basket = new Basket();
         updateSaleDTO();
@@ -89,6 +96,15 @@ public class Controller {
         generateReceipt();
         updateLogs();
         return this.saleDTO;
+    }
+
+    /**
+     * The observer to notify when transaction has been finalized.
+     *
+     * @param saleLogObserver The observer that should be notified.
+     */
+    public void addSaleLogObserver(SaleLogObserver saleLogObserver) {
+        saleLogObserversList.add(saleLogObserver);
     }
 
     private SaleDTO updateSaleDTO() {
