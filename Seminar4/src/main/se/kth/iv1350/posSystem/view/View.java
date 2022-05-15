@@ -51,7 +51,7 @@ public class View {
 
     private void addItemSimulatingExternalSystemConnectionFailure(String itemIDTriggeringConnectionFailure) {
         try {
-            System.out.println("[addItem('404'), simulates connection failure]");
+            System.out.print("[addItem('404')]\t\t|\t");
             basketPrinter(this.controller.addItem(itemIDTriggeringConnectionFailure));
         } catch (OperationFailedException | ItemIdentifierException exception) {
             handleException(exception);
@@ -68,7 +68,7 @@ public class View {
 
     private void registerInvalidItemID(String itemID) {
         try {
-            System.out.println("[addItem('1231223'), an invalid item identifier]");
+            System.out.print("[addItem('1231223')]\t|\t");
             basketPrinter(this.controller.addItem(itemID));
         } catch (ItemIdentifierException exception) {
             exceptionMessagePrinter(exception);
@@ -78,7 +78,7 @@ public class View {
     }
 
     private void startSalePrinter() {
-        System.out.println("\n\n[startSale()]\n");
+        System.out.println("\n\n[startSale()]\t\t\t|");
         this.controller.startSale();
     }
 
@@ -87,20 +87,20 @@ public class View {
         String itemIDOfLastRegisteredItem = lastRegisteredItem.getItemID();
         Amount qtyOfLastRegisteredItem = saleDTO.getItemsInBasket().get(lastRegisteredItem);
 
-        System.out.println("[addItem('" + itemIDOfLastRegisteredItem + "')]");
-        System.out.println(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
-        System.out.printf("Running total (including VAT): " + saleDTO.getTotalPrice() + "\n\n");
+        System.out.print("[addItem('" + itemIDOfLastRegisteredItem + "')]\t|\t");
+        System.out.print(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
+        System.out.printf("\t\t\t\t\t\t\t\t| Running total: " + saleDTO.getTotalPrice() + " |\n");
     }
 
     private void endSalePrinter(SaleDTO saleDTO) {
-        System.out.println("[endSale()]");
+        System.out.print("[endSale()]\t\t\t\t|\t");
         System.out.printf("Total Price (including VAT): " + saleDTO.getTotalPrice() + "\n\n");
     }
 
     private void paymentPrinter(SaleDTO saleDTO) {
-        System.out.println("[registerPayment(1800)]");
+        System.out.print("[registerPayment(1800)] |\t");
+        System.out.printf("Change: " + saleDTO.getChange() + "\n");
         System.out.println("[printReceipt(saleDTO)]");
-        System.out.printf("Change: " + saleDTO.getChange() + " \n\n");
     }
 
     private void handleException(Exception exception) {
