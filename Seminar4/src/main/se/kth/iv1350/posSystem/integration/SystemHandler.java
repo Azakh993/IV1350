@@ -11,6 +11,7 @@ import java.util.List;
  * Represents the handler of external systems, databases and the sale log
  */
 public class SystemHandler {
+    private static final SystemHandler SYSTEM_HANDLER = new SystemHandler();
     private final ExternalInventorySystem externalInventorySystem;
     private final ExternalAccountingSystem externalAccountingSystem;
     private final CashRegister cashRegister;
@@ -19,17 +20,17 @@ public class SystemHandler {
     private final List<SaleLogObserver> saleLogObserversList = new ArrayList<>();
 
 
-    /**
-     * Creates an instance of SystemHandler
-     * Calls for creation of instances of external systems, databases, and sale log
-     * Stores the references of the instances
-     */
-    public SystemHandler() {
-        this.externalInventorySystem = new ExternalInventorySystem();
-        this.externalAccountingSystem = new ExternalAccountingSystem();
+
+    private SystemHandler() {
+        this.externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
+        this.externalAccountingSystem = ExternalAccountingSystem.getExternalAccountingSystem();
+        this.receiptPrinter = ReceiptPrinter.getReceiptPrinter();
+        this.saleLog = SaleLog.getSaleLog();
         this.cashRegister = new CashRegister(new Amount(5000));
-        this.receiptPrinter = new ReceiptPrinter();
-        this.saleLog = new SaleLog();
+    }
+
+    public static SystemHandler getSystemHandler () {
+        return SYSTEM_HANDLER;
     }
 
     /**
