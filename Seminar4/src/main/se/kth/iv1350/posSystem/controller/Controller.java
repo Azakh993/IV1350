@@ -37,7 +37,7 @@ public class Controller {
      * Calls for creation of <code>Payment</code> and <code>Basket</code>
      */
     public void startSale() {
-        this.systemHandler.addSaleLogObservers(saleLogObserversList);
+        this.systemHandler.addNewSaleLogObservers(saleLogObserversList);
         this.payment = new Payment();
         this.basket = new Basket();
         updateSaleDTO();
