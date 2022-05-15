@@ -12,8 +12,6 @@ public class FileLogger {
 
     /**
      * Generates an empty text file
-     *
-     * @throws IOException if the file could not be created.
      */
     public FileLogger(String filePath) {
         try {
