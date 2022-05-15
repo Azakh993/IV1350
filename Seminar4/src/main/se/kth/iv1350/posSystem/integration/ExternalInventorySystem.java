@@ -7,12 +7,17 @@ import se.kth.iv1350.posSystem.utilities.Amount;
 import java.util.HashMap;
 
 class ExternalInventorySystem {
+    private static final ExternalInventorySystem EXTERNAL_INVENTORY_SYSTEM = new ExternalInventorySystem();
     private final HashMap<String, ItemDTO> itemCatalogue = new HashMap<>();
     private final HashMap<String, Amount> itemInventory = new HashMap<>();
 
-    ExternalInventorySystem() {
+    private ExternalInventorySystem() {
         setItemCatalogue();
         setStartingInventory();
+    }
+
+    static ExternalInventorySystem getExternalInventorySystem() {
+        return EXTERNAL_INVENTORY_SYSTEM;
     }
 
     ItemDTO getItem(String itemID) throws ItemIdentifierException, ExternalSystemException {
