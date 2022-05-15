@@ -18,7 +18,7 @@ class ExternalInventorySystemTest {
 
     @BeforeEach
     void setUp() {
-        this.externalInventorySystem = new ExternalInventorySystem();
+        this.externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
         this.basket = new Basket();
         this.payment = new Payment();
     }
