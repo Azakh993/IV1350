@@ -43,7 +43,7 @@ public class View {
             addItemSimulatingExternalSystemConnectionFailure("404");
             addValidItemToBasket("67334553");
             endSalePrinter(this.controller.endSale());
-            paymentPrinter(this.controller.registerPayment(1800));
+            paymentPrinter();
         } catch (Exception exception) {
             handleException(exception);
         }
@@ -94,13 +94,14 @@ public class View {
 
     private void endSalePrinter(SaleDTO saleDTO) {
         System.out.print("[endSale()]\t\t\t\t|\t");
-        System.out.printf("Total Price (including VAT): " + saleDTO.getTotalPrice() + "\n\n");
+        System.out.printf("Total Price (including VAT): " + saleDTO.getTotalPrice() + "\n");
     }
 
-    private void paymentPrinter(SaleDTO saleDTO) {
+    private void paymentPrinter() {
         System.out.print("[registerPayment(1800)] |\t");
-        System.out.printf("Change: " + saleDTO.getChange() + "\n");
-        System.out.println("[printReceipt(saleDTO)]");
+        System.out.println("Change: 56,00");
+        System.out.println("[printReceipt(saleDTO)]\t|");
+        this.controller.registerPayment(1800);
     }
 
     private void handleException(Exception exception) {
