@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class Controller {
     private final SystemHandler systemHandler;
+    private final List<SaleLogObserver> saleLogObserversList = new ArrayList<>();
     private Basket basket;
     private Payment payment;
     private SaleDTO saleDTO;
-    private final List<SaleLogObserver> saleLogObserversList = new ArrayList<>();
 
 
     /**
@@ -29,7 +29,7 @@ public class Controller {
      * Calls for creation of a new <code>SystemHandler</code> object
      */
     public Controller() {
-        this.systemHandler = new SystemHandler();
+        this.systemHandler = SystemHandler.getSystemHandler();
     }
 
     /**
