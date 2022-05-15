@@ -79,8 +79,9 @@ public class SystemHandler {
      *
      * @param saleLogObserversList The list of observers that should be notified.
      */
-    public void addSaleLogObservers(List<SaleLogObserver> saleLogObserversList) {
-        this.saleLogObserversList.addAll(saleLogObserversList);
+    public void addNewSaleLogObservers(List<SaleLogObserver> saleLogObserversList) {
+        for(SaleLogObserver saleLogObserver : saleLogObserversList)
+            addNewSaleLogObserver(saleLogObserver);
     }
 
     /**
@@ -88,8 +89,10 @@ public class SystemHandler {
      *
      * @param saleLogObserver The observer that should be notified.
      */
-    public void addSaleLogObserver(SaleLogObserver saleLogObserver) {
-        saleLogObserversList.add(saleLogObserver);
+    public void addNewSaleLogObserver(SaleLogObserver saleLogObserver) {
+        if (!this.saleLogObserversList.contains(saleLogObserver)) {
+            this.saleLogObserversList.add(saleLogObserver);
+        }
     }
 
     private void notifyObservers() {
