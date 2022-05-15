@@ -8,13 +8,7 @@ import java.io.StringWriter;
 class ExceptionFormatter {
 
     String exceptionMessageFormatter(Exception exception) {
-        StringBuilder errorMessage = new StringBuilder();
-        errorMessage.append("-------------------------------------------------\n");
-        errorMessage.append("Error: ");
-        errorMessage.append(exception.getMessage());
-        errorMessage.append("\n-------------------------------------------------\n");
-
-        return errorMessage.toString();
+        return ">> Error: " + exception.getMessage() + " <<";
     }
 
     String exceptionLogEntryFormatter(Exception exception) {
