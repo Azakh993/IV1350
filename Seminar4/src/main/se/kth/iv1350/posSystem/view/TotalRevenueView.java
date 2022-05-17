@@ -18,7 +18,7 @@ public class TotalRevenueView implements SaleLogObserver {
     }
 
     private void revenuePrinter(TimeAndDate timeAndDate) { // Duplicate code... Approach to solve?
-        System.out.println("-------------------------------------------------");
+        System.out.println("\n-------------------------------------------------");
         System.out.println("Revenue at " + timeAndDate.getTimeAndDate() + ": " + this.totalRevenue);
         System.out.println("-------------------------------------------------\n");
     }
