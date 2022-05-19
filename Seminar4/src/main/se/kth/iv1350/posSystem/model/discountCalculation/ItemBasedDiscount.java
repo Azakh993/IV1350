@@ -31,7 +31,7 @@ public class ItemBasedDiscount implements DiscountStrategy {
                 if (!discount.isTotalBasedDiscount() && discount.getItemIDRequirement().equals(item.getItemID()))
                     if (discount.getItemQtyRequirement().equals(itemsInBasket.get(item))) {
                         Amount itemPrice = item.getItemPrice();
-                        Amount itemDiscount = discount.getDiscount();
+                        Amount itemDiscount = discount.getDiscount().multipliedWith(discount.getItemQtyRequirement());
                         itemBasedDiscount = itemBasedDiscount.plus(itemDiscount.multipliedWith(itemPrice));
                     }
 

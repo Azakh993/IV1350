@@ -3,55 +3,56 @@ package se.kth.iv1350.posSystem.integration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import se.kth.iv1350.posSystem.model.Basket;
-import se.kth.iv1350.posSystem.model.ItemDTO;
-import se.kth.iv1350.posSystem.model.Payment;
-import se.kth.iv1350.posSystem.model.SaleDTO;
-import se.kth.iv1350.posSystem.utilities.Amount;
+import se.kth.iv1350.posSystem.dto.ItemDTO;
+import se.kth.iv1350.posSystem.controller.Controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ExternalInventorySystemTest {
     private ExternalInventorySystem externalInventorySystem;
-    private Basket basket;
-    private Payment payment;
+    private Controller controller;
 
     @BeforeEach
     void setUp() {
         this.externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
-        this.basket = new Basket();
-        this.payment = new Payment();
+        this.controller = new Controller();
     }
 
     @AfterEach
     void tearDown() {
         this.externalInventorySystem = null;
-        this.basket = null;
-        this.payment = null;
+        this.controller = null;
     }
 
     @Test
     void testSetItemInventory() {
-        ItemDTO testItemDTO = new ItemDTO("95867956", "Apple Keyboard",
-                new Amount(1499), new Amount(0.25));
-        this.basket.setItemInBasket(testItemDTO);
-        SaleDTO saleDTO = new SaleDTO(this.payment, this.basket);
-        this.externalInventorySystem.setItemInventory(saleDTO);
-        Amount expectedItemQtyInInventory = new Amount(0);
-        Amount itemQtyInInventory = this.externalInventorySystem.getItemInventory().get("95867956");
-        assertEquals(expectedItemQtyInInventory, itemQtyInInventory, "Item quantity not set correctly!");
+        String validItemID = "95867956";
+        double expectedResult = this.externalInventorySystem.getItemInventory().get(validItemID).getAmount() - 2;
+        this.controller.startSale();
+        try {
+            this.controller.addItem(validItemID);
+            this.controller.addItem(validItemID);
+        } catch (Exception exception) {
+            fail("Exception incorrectly thrown!");
+        }
+        this.controller.endSale();
+        double amountPaid = 3000;
+        this.controller.registerPayment(amountPaid);
+        double result = this.externalInventorySystem.getItemInventory().get(validItemID).getAmount();
+        assertEquals(expectedResult, result, "Item quantity is not set correctly!");
     }
 
     @Test
-    void testSetItemInventorySoStockGetsNegative() {
-        ItemDTO testItemDTO = new ItemDTO("95867956", "Apple Keyboard",
-                new Amount(1499), new Amount(0.25));
-        this.basket.setItemInBasket(testItemDTO);
-        this.basket.setItemInBasket(testItemDTO);
-        SaleDTO saleDTO = new SaleDTO(this.payment, this.basket);
-        this.externalInventorySystem.setItemInventory(saleDTO);
-        Amount expectedItemQtyInInventory = new Amount(-1);
-        Amount itemQtyInInventory = this.externalInventorySystem.getItemInventory().get("95867956");
-        assertEquals(expectedItemQtyInInventory, itemQtyInInventory, "Item quantity not set correctly!");
+    void testGetItem() {
+        String validItemID = "95867956";
+        ItemDTO expectedResult = this.externalInventorySystem.getItemCatalogue().get(validItemID);
+        this.controller.startSale();
+        try {
+            ItemDTO result = this.externalInventorySystem.getItem(validItemID);
+            assertEquals(expectedResult, result, "Item quantity is not set correctly!");
+        } catch (Exception exception) {
+            fail("Exception incorrectly thrown!");
+        }
     }
 }

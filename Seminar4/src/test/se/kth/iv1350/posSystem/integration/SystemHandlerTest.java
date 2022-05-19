@@ -12,7 +12,7 @@ class SystemHandlerTest {
 
     @BeforeEach
     void setUp() {
-        this.systemHandler = SystemHandler.getSystemHandler();
+        this.systemHandler = new SystemHandler();
     }
 
     @AfterEach

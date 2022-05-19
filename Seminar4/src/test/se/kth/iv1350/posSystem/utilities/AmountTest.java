@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AmountTest {
     private Amount firstAmount;
+
     @BeforeEach
     void setUp() {
         this.firstAmount = new Amount(10);

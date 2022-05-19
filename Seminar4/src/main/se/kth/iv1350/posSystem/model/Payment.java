@@ -109,9 +109,6 @@ class Payment {
     }
 
     private void setChange() {
-        if (this.totalPriceAfterDiscount == null)
-            this.change = this.amountPaid.minus(this.totalPrice);
-        else
-            this.change = this.amountPaid.minus(this.totalPriceAfterDiscount);
+        this.change = this.amountPaid.minus(this.totalPriceAfterDiscount);
     }
 }
