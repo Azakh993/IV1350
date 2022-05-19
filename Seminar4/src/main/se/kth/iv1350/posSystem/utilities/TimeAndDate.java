@@ -20,6 +20,7 @@ public class TimeAndDate {
 
     /**
      * Getter function that returns the time and date
+     *
      * @return The <code>timeAndDate</code>
      */
     public String getTimeAndDate() {

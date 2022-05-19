@@ -11,6 +11,10 @@ class ExceptionFormatter {
         return ">> Error: " + exception.getMessage() + " <<";
     }
 
+    String unknownExceptionMessageFormatter() {
+        return ">> Error: Could not complete operation. Please try again. <<";
+    }
+
     String exceptionLogEntryFormatter(Exception exception) {
         StringBuilder logEntry = new StringBuilder();
         TimeAndDate timeAndDateOfException = new TimeAndDate();

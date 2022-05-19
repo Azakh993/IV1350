@@ -1,7 +1,9 @@
 package se.kth.iv1350.posSystem.integration;
 
-import se.kth.iv1350.posSystem.model.ItemDTO;
-import se.kth.iv1350.posSystem.model.SaleDTO;
+import se.kth.iv1350.posSystem.dto.CustomerDTO;
+import se.kth.iv1350.posSystem.dto.DiscountDTO;
+import se.kth.iv1350.posSystem.dto.ItemDTO;
+import se.kth.iv1350.posSystem.dto.ReceiptDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
 import java.util.ArrayList;
@@ -11,26 +13,26 @@ import java.util.List;
  * Represents the handler of external systems, databases and the sale log
  */
 public class SystemHandler {
-    private static final SystemHandler SYSTEM_HANDLER = new SystemHandler();
     private final ExternalInventorySystem externalInventorySystem;
     private final ExternalAccountingSystem externalAccountingSystem;
+    private final CustomerDatabase customerDatabase;
+    private final DiscountDatabase discountDatabase;
     private final CashRegister cashRegister;
     private final ReceiptPrinter receiptPrinter;
     private final SaleLog saleLog;
-    private final List<SaleLogObserver> saleLogObserversList = new ArrayList<>();
+    private final List<SystemHandlerObserver> systemHandlerObserversList = new ArrayList<>();
 
-
-
-    private SystemHandler() {
+    /**
+     * Creates an instance of <code>SystemHandler</code> and registers reference to external systems and logs
+     */
+    public SystemHandler() {
         this.externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
         this.externalAccountingSystem = ExternalAccountingSystem.getExternalAccountingSystem();
+        this.discountDatabase = DiscountDatabase.getDiscountDB();
+        this.customerDatabase = CustomerDatabase.getCustomerDB();
         this.receiptPrinter = ReceiptPrinter.getReceiptPrinter();
         this.saleLog = SaleLog.getSaleLog();
         this.cashRegister = new CashRegister(new Amount(5000));
-    }
-
-    public static SystemHandler getSystemHandler () {
-        return SYSTEM_HANDLER;
     }
 
     /**
@@ -46,60 +48,70 @@ public class SystemHandler {
     }
 
     /**
-     * Adds cash to the cash register
+     * Retrieves registered customer information if the provided <code>customerID</code> is registered
      *
-     * @param saleDTO The object instance specifying amount paid and amount change to give back
+     * @param customerID The unique customer identification
+     * @return The <code>customerDTO</code> containing registered customer information
+     * @throws CustomerRegistrationException If the provided <code>customerID</code> is not registered
      */
-    public void addCashToRegister(SaleDTO saleDTO) {
-        this.cashRegister.setCashInRegister(saleDTO);
+    public CustomerDTO fetchCustomerDTO(String customerID) throws CustomerRegistrationException {
+        return this.customerDatabase.getCustomerDTO(customerID);
     }
 
     /**
-     * Forwards receipt data to receipt printer for printing
+     * Retrieves all discounts offered
      *
-     * @param saleDTO The receipt information
+     * @return The <code>DiscountDTO</code> containing all discounts
      */
-    public void printReceipt(SaleDTO saleDTO) {
-        this.receiptPrinter.printReceipt(saleDTO);
+    public DiscountDTO fetchDiscounts() {
+        return this.discountDatabase.getDiscountDTO();
     }
 
+
     /**
-     * Updates sale log, the inventory of items and the payment records
+     * Registers transaction data by setting the new amount of cash in <code>CashRegister</code>,
+     * printing a receipt and updating logs in relevant systems.
      *
-     * @param saleDTO The sale data, containing all information on the transaction
+     * @param receiptDTO The DTO containing all data on a single sale
      */
-    public void updateLogs(SaleDTO saleDTO) {
-        this.externalInventorySystem.setItemInventory(saleDTO);
-        this.externalAccountingSystem.setPaymentRecords(saleDTO);
-        this.saleLog.setSaleInstance(saleDTO);
+    public void registerTransaction(ReceiptDTO receiptDTO) {
+        this.cashRegister.setCashInRegister(receiptDTO);
+        this.receiptPrinter.printReceipt(receiptDTO);
+        updateLogs(receiptDTO);
+    }
+
+    private void updateLogs(ReceiptDTO receiptDTO) {
+        this.externalInventorySystem.setItemInventory(receiptDTO);
+        this.externalAccountingSystem.setPaymentRecords(receiptDTO);
+        this.saleLog.setSaleInstance(receiptDTO);
         notifyObservers();
     }
 
-    /**
-     * The observers to notify when transaction has been finalized.
-     *
-     * @param saleLogObserversList The list of observers that should be notified.
-     */
-    public void addNewSaleLogObservers(List<SaleLogObserver> saleLogObserversList) {
-        for(SaleLogObserver saleLogObserver : saleLogObserversList)
-            addNewSaleLogObserver(saleLogObserver);
-    }
-
-    /**
-     * The observer to notify when transaction has been finalized.
-     *
-     * @param saleLogObserver The observer that should be notified.
-     */
-    public void addNewSaleLogObserver(SaleLogObserver saleLogObserver) {
-        if (!this.saleLogObserversList.contains(saleLogObserver)) {
-            this.saleLogObserversList.add(saleLogObserver);
+    private void notifyObservers() {
+        ReceiptDTO latestReceiptDTO = this.saleLog.getTransactionsList().getLast();
+        for (SystemHandlerObserver systemHandlerObserver : systemHandlerObserversList) {
+            systemHandlerObserver.updateLogs(latestReceiptDTO);
         }
     }
 
-    private void notifyObservers() {
-        SaleDTO latestSaleDTO = this.saleLog.getTransactionsList().getLast();
-        for (SaleLogObserver saleLogObserver : saleLogObserversList) {
-            saleLogObserver.updateLogs(latestSaleDTO);
+    /**
+     * Adds all new observers to the observers list that should be notified
+     *
+     * @param systemHandlerObserversList The list of observers that should be added and notified.
+     */
+    public void addNewSystemHandlerObservers(List<SystemHandlerObserver> systemHandlerObserversList) {
+        for (SystemHandlerObserver systemHandlerObserver : systemHandlerObserversList)
+            addSystemHandlerObserver(systemHandlerObserver);
+    }
+
+    /**
+     * Adds a new observer to the observers list that should be notified
+     *
+     * @param systemHandlerObserver The observer to add and to be notified
+     */
+    public void addSystemHandlerObserver(SystemHandlerObserver systemHandlerObserver) {
+        if (!this.systemHandlerObserversList.contains(systemHandlerObserver)) {
+            this.systemHandlerObserversList.add(systemHandlerObserver);
         }
     }
 }

@@ -17,7 +17,7 @@ public class Main {
         Controller controller = new Controller();
         View view = new View(controller);
 
-        view.sampleSale();
-        view.sampleSale();
+        view.firstSampleSale();
+        view.secondSampleSale();
     }
 }

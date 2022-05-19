@@ -1,6 +1,6 @@
 package se.kth.iv1350.posSystem.integration;
 
-import se.kth.iv1350.posSystem.model.SaleDTO;
+import se.kth.iv1350.posSystem.dto.ReceiptDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
 class CashRegister {
@@ -14,7 +14,7 @@ class CashRegister {
         return this.cashInRegister;
     }
 
-    void setCashInRegister(SaleDTO saleDTO) {
-        this.cashInRegister = this.cashInRegister.plus(saleDTO.getTotalPrice());
+    void setCashInRegister(ReceiptDTO receiptDTO) {
+        this.cashInRegister = this.cashInRegister.plus(receiptDTO.getTotalPrice());
     }
 }

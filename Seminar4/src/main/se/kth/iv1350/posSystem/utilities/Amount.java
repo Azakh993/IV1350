@@ -16,15 +16,6 @@ public class Amount {
     }
 
     /**
-     * Gets the value of the stored amount
-     *
-     * @return The value of the stored amount
-     */
-    public double getAmount() {
-        return this.amount;
-    }
-
-    /**
      * Adds the specified amount from the stored amount
      *
      * @param amountToAdd The amount to add
@@ -35,6 +26,15 @@ public class Amount {
     }
 
     /**
+     * Gets the value of the stored amount
+     *
+     * @return The value of the stored amount
+     */
+    public double getAmount() {
+        return this.amount;
+    }
+
+    /**
      * Multiplies the specified amount from the stored amount
      *
      * @param amountToMultiplyWith The amount to multiply with
@@ -42,6 +42,16 @@ public class Amount {
      */
     public Amount multipliedWith(Amount amountToMultiplyWith) {
         return new Amount(this.amount * amountToMultiplyWith.getAmount());
+    }
+
+    /**
+     * Divides the specified amount with the stored amount
+     *
+     * @param amountToDivideWith The amount to divide with
+     * @return The reference to a new Amount instance representing the result of the division
+     */
+    public Amount dividedWith(Amount amountToDivideWith) {
+        return new Amount(this.amount / amountToDivideWith.getAmount());
     }
 
     /**
