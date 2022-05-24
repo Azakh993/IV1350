@@ -33,31 +33,26 @@ class Payment {
 	}
 
 	PaymentDTO getPaymentDTO() {
-		return this.paymentDTO;
+		return paymentDTO;
 	}
 
 	void setDiscountData(BasketDTO basketDTO, DiscountDTO discountDTO) {
 		Discount discount = new Discount();
-		setDiscount(discount.calculateDiscount(discountDTO, basketDTO.getBasket(), getTotalPrice()));
-		setTotalPriceAfterDiscount(discount.calculateTotalPriceAfterDiscount(getTotalPrice(), getDiscount()));
+		setDiscount(discount.calculateDiscount(discountDTO, basketDTO.getBasket(), totalPrice));
+		setTotalPriceAfterDiscount(discount.calculateTotalPriceAfterDiscount(totalPrice, this.discount));
 		setTotalVATAfterDiscount(
-				discount.calculateTotalVATAfterDiscount(getTotalPriceAfterDiscount(), getTotalPrice(), getTotalVAT()));
+				discount.calculateTotalVATAfterDiscount(totalPriceAfterDiscount, totalPrice, totalVAT));
 		setDiscountPaymentDTO();
 	}
 
 	void setAmountPaidAndChange(Amount amountPaid) {
-		this.setAmountPaid(amountPaid);
-		this.setChange();
-		if (this.discount == null)
+		setAmountPaid(amountPaid);
+		setChange();
+		if (discount == null)
 			setNonDiscountPaymentDTO();
 		else
 			setDiscountPaymentDTO();
 	}
-
-	Amount getDiscount() {
-		return this.discount;
-	}
-
 	private void setDiscount(Amount discount) {
 		this.discount = discount;
 	}
@@ -71,36 +66,17 @@ class Payment {
 	}
 
 	Amount getTotalPrice() {
-		return this.totalPrice;
+		return totalPrice;
 	}
-
-	Amount getTotalVAT() {
-		return totalVAT;
-	}
-
 	private void setDiscountPaymentDTO() {
-		this.paymentDTO = new PaymentDTO(getTotalPrice(), getTotalVAT(), getAmountPaid(), getChange(),
-				getDiscount(), getTotalPriceAfterDiscount(), getTotalVATAfterDiscount());
+		this.paymentDTO = new PaymentDTO(totalPrice, totalVAT, amountPaid, change,
+				discount, totalPriceAfterDiscount, totalVATAfterDiscount);
 	}
-
-	Amount getTotalVATAfterDiscount() {
-		return this.totalVATAfterDiscount;
-	}
-
 	private void setTotalVATAfterDiscount(Amount totalVATAfterDiscount) {
 		this.totalVATAfterDiscount = totalVATAfterDiscount;
 	}
-
-	private Amount getAmountPaid() {
-		return this.amountPaid;
-	}
-
-	private Amount getChange() {
-		return this.change;
-	}
-
 	private void setNonDiscountPaymentDTO() {
-		this.paymentDTO = new PaymentDTO(getTotalPrice(), getTotalVAT(), getAmountPaid(), getChange());
+		this.paymentDTO = new PaymentDTO(totalPrice, totalVAT, amountPaid, change);
 	}
 
 	private void setAmountPaid(Amount amountPaid) {
@@ -108,6 +84,9 @@ class Payment {
 	}
 
 	private void setChange() {
-		this.change = this.amountPaid.minus(this.totalPriceAfterDiscount);
+		if(discount == null)
+			this.change = this.amountPaid.minus(this.totalPrice);
+		else
+			this.change = this.amountPaid.minus(this.totalPriceAfterDiscount);
 	}
 }
