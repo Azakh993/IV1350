@@ -1,9 +1,6 @@
 package se.kth.iv1350.posSystem.view;
 
 import se.kth.iv1350.posSystem.controller.Controller;
-import se.kth.iv1350.posSystem.controller.OperationFailedException;
-import se.kth.iv1350.posSystem.dto.BasketDTO;
-import se.kth.iv1350.posSystem.dto.ItemDTO;
 import se.kth.iv1350.posSystem.dto.ReceiptDTO;
 import se.kth.iv1350.posSystem.integration.CustomerRegistrationException;
 import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
@@ -16,7 +13,7 @@ import se.kth.iv1350.posSystem.utilities.FileLogger;
 public class View {
 	private final static String LOG_FILE_PATH = "Seminar4/textFiles/log.txt";
 	private final Controller controller;
-	private final ExceptionFormatter exceptionFormatter;
+	private final OutputFormatter outputFormatter;
 	private final FileLogger exceptionLogger;
 
 	/**
@@ -27,7 +24,7 @@ public class View {
 		this.controller = controller;
 		this.controller.addSaleLogObserver(new TotalRevenueView());
 		this.controller.addSaleLogObserver(new TotalRevenueFileOutput());
-		this.exceptionFormatter = new ExceptionFormatter();
+		this.outputFormatter = new OutputFormatter();
 		this.exceptionLogger = new FileLogger(LOG_FILE_PATH);
 	}
 
@@ -50,96 +47,52 @@ public class View {
 			System.out.print("[addDiscount(9304050001)]\t|\t");
 			addDiscounts("9304050001");
 			addDiscounts("9304050000");
-			registerPayment();
+			registerPayment(2500);
 		} catch (Exception exception) {
 			logException(exception);
+			System.out.println("Operation failed. Please try again.");
 		}
 	}
 
 	private void startSale() {
-		this.controller.startSale();
-		startSalePrinter();
+		controller.startSale();
+		outputFormatter.startSalePrinter();
 	}
 
 	private void addItemToBasket(String itemID) {
 		try {
-			addIemToBasketPrinter(this.controller.addItem(itemID));
-			runningTotalPrinter(this.controller.fetchTotalPrice());
+			outputFormatter.addIemToBasketPrinter(controller.addItem(itemID));
+			outputFormatter.runningTotalPrinter(controller.fetchTotalPrice());
 		} catch (ItemIdentifierException exception) {
-			exceptionMessagePrinter(exception);
-		} catch (OperationFailedException exception) {
-			logException(exception);
-			exceptionMessagePrinter(exception);
+			System.out.println("Item identifier '" + itemID + "' is invalid.");
 		} catch (Exception exception) {
 			logException(exception);
-			unknownExceptionMessagePrinter();
+			System.out.println("Could not register item. Try again.");
 		}
 	}
 
 	private void endSale() {
-		Amount totalPrice = this.controller.endSale();
-		endSalePrinter(totalPrice);
+		Amount totalPrice = controller.endSale();
+		outputFormatter.endSalePrinter(totalPrice);
 	}
 
 	private void addDiscounts(String customerID) {
 		try {
-			Amount totalPriceAfterDiscount = this.controller.requestDiscount(customerID);
-			addDiscountsPrinter(totalPriceAfterDiscount, customerID);
+			Amount totalPriceAfterDiscount = controller.requestDiscount(customerID);
+			outputFormatter.addDiscountsPrinter(totalPriceAfterDiscount, customerID);
 		} catch (CustomerRegistrationException exception) {
-			exceptionMessagePrinter(exception);
-		} catch (Exception exception) {
-			logException(exception);
-			unknownExceptionMessagePrinter();
+			System.out.println("Customer ID '" + customerID + "' is not registered.");
 		}
 	}
 
-	private void registerPayment() {
-		ReceiptDTO receiptDTO = this.controller.registerPayment(2700);
-		registerPaymentPrinter(receiptDTO);
+	private void registerPayment(double amountPaid) {
+		ReceiptDTO receiptDTO = controller.registerPayment(amountPaid);
+		outputFormatter.registerPaymentPrinter(receiptDTO);
 	}
 
 	private void logException(Exception exception) {
-		String formattedLogEntry = this.exceptionFormatter.exceptionLogEntryFormatter(exception);
+		String formattedLogEntry = outputFormatter.exceptionLogEntryFormatter(exception);
 		exceptionLogger.addEntryToLog(formattedLogEntry);
-	}
-
-	private void startSalePrinter() {
-		System.out.println("\n\n[startSale()]\t\t\t\t|");
-	}
-
-	private void addIemToBasketPrinter(BasketDTO basketDTO) {
-		ItemDTO lastRegisteredItem = basketDTO.getLastRegisteredItem();
-		String itemIDOfLastRegisteredItem = lastRegisteredItem.getItemID();
-		Amount qtyOfLastRegisteredItem = basketDTO.getBasket().get(lastRegisteredItem);
-		System.out.print("[addItem('" + itemIDOfLastRegisteredItem + "')]\t\t|\t");
-		System.out.print(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
-	}
-
-	private void runningTotalPrinter(Amount runningTotal) {
-		System.out.printf("\t\t\t\t\t\t\t\t| Running total: " + runningTotal + " |\n");
-	}
-
-	private void exceptionMessagePrinter(Exception exception) {
-		System.out.println(this.exceptionFormatter.exceptionMessageFormatter(exception));
-	}
-
-	private void unknownExceptionMessagePrinter() {
-		System.out.println(this.exceptionFormatter.unknownExceptionMessageFormatter());
-	}
-
-	private void endSalePrinter(Amount totalPrice) {
-		System.out.print("[endSale()]\t\t\t\t\t|\t");
-		System.out.printf(String.format("Total Price (including VAT): %.2f\n", totalPrice.getAmount()));
-	}
-
-	private void addDiscountsPrinter(Amount totalPriceAfterDiscount, String customerID) {
-		System.out.print("[addDiscount(" + customerID + ")]\t|\t");
-		System.out.printf(String.format("Total Price After Discount: %.2f\n", totalPriceAfterDiscount.getAmount()));
-	}
-
-	private void registerPaymentPrinter(ReceiptDTO receiptDTO) {
-		System.out.print("[registerPayment(" + receiptDTO.getAmountPaid().getAmount() + ")]\t|\t");
-		System.out.println(String.format("Change: %.2f", receiptDTO.getChange().getAmount()));
 	}
 
 	/**
@@ -151,7 +104,7 @@ public class View {
 			addItemToBasket("67334553");
 			endSale();
 			addDiscounts("9304050000");
-			registerPayment();
+			registerPayment(300);
 		} catch (Exception exception) {
 			logException(exception);
 		}
