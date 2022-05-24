@@ -3,7 +3,7 @@ package se.kth.iv1350.posSystem.integration;
 /**
  * Thrown when connection to an external system cannot be established
  */
-public class ExternalSystemException extends Exception {
+public class ExternalSystemException extends RuntimeException {
 	private final Object externalSystemReference;
 
 	/**
@@ -20,6 +20,6 @@ public class ExternalSystemException extends Exception {
 	 * @return the external system instance reference
 	 */
 	public Object getExternalSystemReference() {
-		return this.externalSystemReference;
+		return externalSystemReference;
 	}
 }
