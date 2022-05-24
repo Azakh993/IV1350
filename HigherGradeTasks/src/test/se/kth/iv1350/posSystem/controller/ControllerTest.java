@@ -35,8 +35,6 @@ class ControllerTest {
             assertEquals(expectedResult, result, "ReceiptDTO not generated correctly!");
         } catch (ItemIdentifierException exception) {
             fail("ItemIdentifierException incorrectly thrown!");
-        } catch (OperationFailedException exception) {
-            fail("OperationFailedException incorrectly thrown!");
         } catch (Exception exception) {
             fail(exception.getClass() + "incorrectly thrown!");
         }
@@ -50,8 +48,6 @@ class ControllerTest {
             fail("Item added before new sale initiated.");
         } catch (ItemIdentifierException exception) {
             fail("ItemIdentifierException incorrectly thrown!");
-        } catch (OperationFailedException exception) {
-            fail("OperationFailedException incorrectly thrown!");
         } catch (IllegalStateException exception) {
             assertEquals(expectedResult, exception.getMessage(), "Exception message mismatch!");
         }
@@ -78,7 +74,7 @@ class ControllerTest {
         try {
             this.controller.addItem(validItemID);
             this.controller.addItem(validItemID);
-        } catch (ItemIdentifierException | OperationFailedException exception) {
+        } catch (Exception exception) {
             fail("Incorrectly thrown exception!");
         }
         this.controller.endSale();
@@ -99,7 +95,7 @@ class ControllerTest {
         Amount result = new Amount(0);
         try {
             this.controller.addItem(validItemID);
-        } catch (ItemIdentifierException | OperationFailedException exception) {
+        } catch (Exception exception) {
             fail("Incorrectly thrown exception!");
         }
         this.controller.endSale();
