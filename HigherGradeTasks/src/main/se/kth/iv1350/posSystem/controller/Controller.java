@@ -28,7 +28,7 @@ public class Controller {
 	 * <code>SaleHandler</code>
 	 */
 	public void startSale() {
-		this.systemHandler.addNewSystemHandlerObservers(systemHandlerObserversList);
+		systemHandler.addNewSystemHandlerObservers(systemHandlerObserversList);
 		this.saleHandler = new SaleHandler();
 	}
 
@@ -37,26 +37,21 @@ public class Controller {
 	 * <code>totalPrice</code> and <code>totalVAT</code>
 	 * @param itemID The unique identifier for an item
 	 * @return The latest instance of <code>BasketDTO</code>
-	 * @throws OperationFailedException if the <code>ExternalInventorySystem</code> cannot be contacted
 	 * @throws ItemIdentifierException  if provided <code>itemID</code> is invalid
 	 * @throws IllegalStateException    if the method is called before <code>startSale</code>
 	 */
-	public BasketDTO addItem(String itemID) throws OperationFailedException, ItemIdentifierException {
+	public BasketDTO addItem(String itemID) throws ItemIdentifierException {
 		if (!saleActive())
 			throw new IllegalStateException("Attempt to register item before starting a new sale.");
-		try {
-			ItemDTO item = this.systemHandler.fetchItem(itemID);
-			this.saleHandler.addItemToBasket(item);
-		} catch (ExternalSystemException exception) {
-			throw new OperationFailedException("Could not register item. Please try again.", exception);
-		}
-		return this.saleHandler.fetchBasketDTO();
+		ItemDTO item = systemHandler.fetchItem(itemID);
+		saleHandler.addItemToBasket(item);
+		return saleHandler.fetchBasketDTO();
 	}
 
 	private boolean saleActive() {
-		if (this.saleHandler == null)
+		if (saleHandler == null)
 			return false;
-		return this.saleHandler.getSaleActive();
+		return saleHandler.getSaleActive();
 	}
 
 	/**
@@ -68,7 +63,7 @@ public class Controller {
 	public Amount endSale() {
 		if (!saleActive())
 			throw new IllegalStateException("Attempt to end sale before starting a new sale.");
-		this.saleHandler.setSaleActiveToFalse();
+		saleHandler.setSaleActiveToFalse();
 		return fetchTotalPrice();
 	}
 
@@ -78,7 +73,7 @@ public class Controller {
 	 * @return The <code>totalPrice</code>
 	 */
 	public Amount fetchTotalPrice() {
-		return this.saleHandler.fetchTotalPrice();
+		return saleHandler.fetchTotalPrice();
 	}
 
 	/**
@@ -94,9 +89,9 @@ public class Controller {
 	public Amount requestDiscount(String customerID) throws CustomerRegistrationException {
 		if (saleActive())
 			throw new IllegalStateException("Attempt to request discount before starting ending sale.");
-		CustomerDTO customerDTO = this.systemHandler.fetchCustomerDTO(customerID);
-		DiscountDTO discountDTO = this.systemHandler.fetchDiscounts();
-		return this.saleHandler.addDiscount(customerDTO, discountDTO);
+		CustomerDTO customerDTO = systemHandler.fetchCustomerDTO(customerID);
+		DiscountDTO discountDTO = systemHandler.fetchDiscounts();
+		return saleHandler.addDiscount(customerDTO, discountDTO);
 	}
 
 	/**
@@ -109,8 +104,8 @@ public class Controller {
 	public ReceiptDTO registerPayment(double amountPaidInCash) {
 		if (saleActive())
 			throw new IllegalStateException("Attempt to register payment before ending sale.");
-		ReceiptDTO receiptDTO = this.saleHandler.generateReceiptDTO(new Amount(amountPaidInCash));
-		this.systemHandler.registerTransaction(receiptDTO);
+		ReceiptDTO receiptDTO = saleHandler.generateReceiptDTO(new Amount(amountPaidInCash));
+		systemHandler.registerTransaction(receiptDTO);
 		return receiptDTO;
 	}
 
