@@ -11,10 +11,10 @@ class CashRegister {
 	}
 
 	Amount getCashInRegister() {
-		return this.cashInRegister;
+		return cashInRegister;
 	}
 
 	void setCashInRegister(ReceiptDTO receiptDTO) {
-		this.cashInRegister = this.cashInRegister.plus(receiptDTO.getTotalPrice());
+		this.cashInRegister = cashInRegister.plus(receiptDTO.getTotalPrice());
 	}
 }

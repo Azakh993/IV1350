@@ -62,7 +62,7 @@ public class DiscountDTO {
 	 * @return The <code>discountDTOsList</code>
 	 */
 	public List<DiscountDTO> getDiscountDTOsList() {
-		return this.discountDTOsList;
+		return discountDTOsList;
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class DiscountDTO {
 	 * @return The <code>totalBasedDiscount</code>
 	 */
 	public boolean isTotalBasedDiscount() {
-		return this.totalBasedDiscount;
+		return totalBasedDiscount;
 	}
 
 	/**

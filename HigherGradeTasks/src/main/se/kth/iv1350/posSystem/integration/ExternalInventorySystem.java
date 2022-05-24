@@ -17,24 +17,24 @@ class ExternalInventorySystem {
 	}
 
 	private void setItemCatalogue() {
-		this.itemCatalogue.put("95867956", new ItemDTO("95867956", "Black Keyboard",
+		itemCatalogue.put("95867956", new ItemDTO("95867956", "Black Keyboard",
 				new Amount(1499), new Amount(0.25)));
-		this.itemCatalogue.put("24123412", new ItemDTO("24123412", "Wireless Speaker",
+		itemCatalogue.put("24123412", new ItemDTO("24123412", "Wireless Speaker",
 				new Amount(349), new Amount(0.25)));
-		this.itemCatalogue.put("12312234", new ItemDTO("12312234", "Blue Headphones",
+		itemCatalogue.put("12312234", new ItemDTO("12312234", "Blue Headphones",
 				new Amount(799), new Amount(0.25)));
-		this.itemCatalogue.put("67334553", new ItemDTO("67334553", "HDMI Cable, 2m",
+		itemCatalogue.put("67334553", new ItemDTO("67334553", "HDMI Cable, 2m",
 				new Amount(299), new Amount(0.25)));
-		this.itemCatalogue.put("32784623", new ItemDTO("32784623", "Wireless Mouse",
+		itemCatalogue.put("32784623", new ItemDTO("32784623", "Wireless Mouse",
 				new Amount(599), new Amount(0.25)));
 	}
 
 	private void setStartingInventory() {
-		this.itemInventory.put("95867956", new Amount(1));
-		this.itemInventory.put("24123412", new Amount(5));
-		this.itemInventory.put("12312234", new Amount(32));
-		this.itemInventory.put("67334553", new Amount(12));
-		this.itemInventory.put("32784623", new Amount(3));
+		itemInventory.put("95867956", new Amount(1));
+		itemInventory.put("24123412", new Amount(5));
+		itemInventory.put("12312234", new Amount(32));
+		itemInventory.put("67334553", new Amount(12));
+		itemInventory.put("32784623", new Amount(3));
 	}
 
 	static ExternalInventorySystem getExternalInventorySystem() {
@@ -46,15 +46,15 @@ class ExternalInventorySystem {
 			throw new ExternalSystemException(this);
 		if (!itemCatalogue.containsKey(itemID))
 			throw new ItemIdentifierException(itemID);
-		return this.itemCatalogue.get(itemID);
+		return itemCatalogue.get(itemID);
 	}
 
 	HashMap<String, ItemDTO> getItemCatalogue() {
-		return this.itemCatalogue;
+		return itemCatalogue;
 	}
 
 	HashMap<String, Amount> getItemInventory() {
-		return this.itemInventory;
+		return itemInventory;
 	}
 
 	void setItemInventory(ReceiptDTO receiptDTO) {
@@ -62,8 +62,8 @@ class ExternalInventorySystem {
 		for (ItemDTO item : soldItems.keySet()) {
 			String itemID = item.getItemID();
 			Amount soldItemQty = soldItems.get(item);
-			Amount currentItemQty = this.itemInventory.get(itemID);
-			this.itemInventory.put(itemID, currentItemQty.minus(soldItemQty));
+			Amount currentItemQty = itemInventory.get(itemID);
+			itemInventory.put(itemID, currentItemQty.minus(soldItemQty));
 		}
 	}
 }

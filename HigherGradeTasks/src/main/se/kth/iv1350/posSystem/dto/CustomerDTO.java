@@ -25,7 +25,7 @@ public class CustomerDTO {
 	 * @return The <code>customerID</code>
 	 */
 	public String getCustomerID() {
-		return this.customerID;
+		return customerID;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class CustomerDTO {
 	 * @return The <code>name</code>
 	 */
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	/**
@@ -41,6 +41,6 @@ public class CustomerDTO {
 	 * @return The <code>mobileNo</code>
 	 */
 	public String getMobileNo() {
-		return this.mobileNo;
+		return mobileNo;
 	}
 }

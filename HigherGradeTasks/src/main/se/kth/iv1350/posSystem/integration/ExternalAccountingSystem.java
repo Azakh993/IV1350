@@ -13,10 +13,10 @@ class ExternalAccountingSystem {
 	}
 
 	LinkedList<ReceiptDTO> getPaymentRecords() {
-		return this.paymentRecords;
+		return paymentRecords;
 	}
 
 	void setPaymentRecords(ReceiptDTO receiptDTO) {
-		this.paymentRecords.add(receiptDTO);
+		paymentRecords.add(receiptDTO);
 	}
 }

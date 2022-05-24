@@ -15,7 +15,7 @@ public class TimeAndDate {
 	public TimeAndDate() {
 		DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
 		LocalDateTime now = LocalDateTime.now();
-		this.timeAndDate = dateTimeFormat.format(now);
+		timeAndDate = dateTimeFormat.format(now);
 	}
 
 	/**
@@ -23,6 +23,6 @@ public class TimeAndDate {
 	 * @return The <code>timeAndDate</code>
 	 */
 	public String getTimeAndDate() {
-		return this.timeAndDate;
+		return timeAndDate;
 	}
 }

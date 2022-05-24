@@ -66,7 +66,7 @@ public class ReceiptDTO {
 	 * @return The LinkedHashMap of items and their quantity
 	 */
 	public LinkedHashMap<ItemDTO, Amount> getItemsInBasket() {
-		return this.itemsInBasket;
+		return itemsInBasket;
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class ReceiptDTO {
 		stringBuilder.append("\t\tRECEIPT\n");
 		stringBuilder.append(getTimeAndDateOfSale().getTimeAndDate());
 		stringBuilder.append("\n\n");
-		for (ItemDTO item : this.itemsInBasket.keySet()) {
-			stringBuilder.append(String.format("%.0f", this.itemsInBasket.get(item).getAmount()));
+		for (ItemDTO item : itemsInBasket.keySet()) {
+			stringBuilder.append(String.format("%.0f", itemsInBasket.get(item).getAmount()));
 			stringBuilder.append("*\t");
 			stringBuilder.append(item.toString());
 			stringBuilder.append("\n");
@@ -91,7 +91,7 @@ public class ReceiptDTO {
 		stringBuilder.append("Total VAT: ");
 		stringBuilder.append(getTotalVAT());
 		stringBuilder.append("\n");
-		if (this.discount.getAmount() != 0) {
+		if (discount.getAmount() != 0) {
 			stringBuilder.append("\nDiscount: ");
 			stringBuilder.append(getDiscount());
 			stringBuilder.append("\nTotal after discount: ");
@@ -116,7 +116,7 @@ public class ReceiptDTO {
 	 * @return The time and date of the sale
 	 */
 	public TimeAndDate getTimeAndDateOfSale() {
-		return this.timeAndDateOfSale;
+		return timeAndDateOfSale;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class ReceiptDTO {
 	 * @return The running total / total price
 	 */
 	public Amount getTotalPrice() {
-		return this.totalPrice;
+		return totalPrice;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class ReceiptDTO {
 	 * @return The total VAT
 	 */
 	public Amount getTotalVAT() {
-		return this.totalVAT;
+		return totalVAT;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class ReceiptDTO {
 	 * @return The <code>discount</code>
 	 */
 	public Amount getDiscount() {
-		return this.discount;
+		return discount;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class ReceiptDTO {
 	 * @return The <code>totalPriceAfterDiscount</code>
 	 */
 	public Amount getTotalPriceAfterDiscount() {
-		return this.totalPriceAfterDiscount;
+		return totalPriceAfterDiscount;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ReceiptDTO {
 	 * @return The <code>totalVATAfterDiscount</code>
 	 */
 	public Amount getTotalVATAfterDiscount() {
-		return this.totalVATAfterDiscount;
+		return totalVATAfterDiscount;
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class ReceiptDTO {
 	 * @return The amount paid in cash
 	 */
 	public Amount getAmountPaid() {
-		return this.amountPaid;
+		return amountPaid;
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class ReceiptDTO {
 	 * @return The change in cash
 	 */
 	public Amount getChange() {
-		return this.change;
+		return change;
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class ReceiptDTO {
 	 * @return The name of the customer
 	 */
 	public String getCustomerName() {
-		return this.customerName;
+		return customerName;
 	}
 }
 

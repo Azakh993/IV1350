@@ -13,10 +13,10 @@ class SaleLog {
 	}
 
 	void setSaleInstance(ReceiptDTO receiptDTO) {
-		this.transactionsList.add(receiptDTO);
+		transactionsList.add(receiptDTO);
 	}
 
 	LinkedList<ReceiptDTO> getTransactionsList() {
-		return this.transactionsList;
+		return transactionsList;
 	}
 }

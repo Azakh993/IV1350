@@ -22,7 +22,7 @@ class Basket {
 	}
 
 	BasketDTO getBasketDTO() {
-		return this.basketDTO;
+		return basketDTO;
 	}
 
 	void setBasketDTO() {
@@ -30,11 +30,11 @@ class Basket {
 	}
 
 	private LinkedHashMap<ItemDTO, Amount> getItemsInBasket() {
-		return this.itemsInBasket;
+		return itemsInBasket;
 	}
 
 	private ItemDTO getLastRegisteredItem() {
-		return this.lastRegisteredItem;
+		return lastRegisteredItem;
 	}
 
 	private void setLastRegisteredItem(ItemDTO item) {
@@ -42,7 +42,7 @@ class Basket {
 	}
 
 	private boolean itemInBasket(ItemDTO item) {
-		return this.itemsInBasket.containsKey(item);
+		return itemsInBasket.containsKey(item);
 	}
 
 	private void setNewItemInList() {
@@ -52,11 +52,11 @@ class Basket {
 
 	private void incrementItemInBasket() {
 		Amount qtyToAdd = new Amount(1);
-		Amount newItemQty = this.itemsInBasket.get(this.lastRegisteredItem).plus(qtyToAdd);
+		Amount newItemQty = itemsInBasket.get(lastRegisteredItem).plus(qtyToAdd);
 		setItemQtyInBasket(newItemQty);
 	}
 
 	private void setItemQtyInBasket(Amount itemQty) {
-		this.itemsInBasket.put(this.lastRegisteredItem, itemQty);
+		itemsInBasket.put(lastRegisteredItem, itemQty);
 	}
 }

@@ -29,9 +29,9 @@ public class SaleHandler {
 	 * @param item The <code>ItemDTO</code> to add to basket
 	 */
 	public void addItemToBasket(ItemDTO item) {
-		this.basket.setItemInBasket(item);
-		BasketDTO basketDTO = this.basket.getBasketDTO();
-		this.payment.setTotalPriceAndVAT(basketDTO);
+		basket.setItemInBasket(item);
+		BasketDTO basketDTO = basket.getBasketDTO();
+		payment.setTotalPriceAndVAT(basketDTO);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class SaleHandler {
 	 * @return The <code>BasketDTO</code> with all items currently added to the basket
 	 */
 	public BasketDTO fetchBasketDTO() {
-		return this.basket.getBasketDTO();
+		return basket.getBasketDTO();
 	}
 
 	/**
@@ -47,21 +47,21 @@ public class SaleHandler {
 	 * @return The <code>totalPrice</code>
 	 */
 	public Amount fetchTotalPrice() {
-		return this.payment.getTotalPrice();
+		return payment.getTotalPrice();
 	}
 
 	/**
 	 * Gets the <code>saleActive</code>, which indicates whether a new sale is started or not
 	 */
 	public boolean getSaleActive() {
-		return this.saleActive;
+		return saleActive;
 	}
 
 	/**
 	 * Sets the <code>saleActive</code> to false, indicating that item registration is over
 	 */
 	public void setSaleActiveToFalse() {
-		this.saleActive = false;
+		saleActive = false;
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class SaleHandler {
 	 */
 	public Amount addDiscount(CustomerDTO customerDTO, DiscountDTO discountDTO) {
 		this.customerDTO = customerDTO;
-		this.payment.setDiscountData(this.basket.getBasketDTO(), discountDTO);
-		return this.payment.getTotalPriceAfterDiscount();
+		payment.setDiscountData(basket.getBasketDTO(), discountDTO);
+		return payment.getTotalPriceAfterDiscount();
 	}
 
 	/**
@@ -86,9 +86,9 @@ public class SaleHandler {
 	 * @return The <code>ReceiptDTO</code>
 	 */
 	public ReceiptDTO generateReceiptDTO(Amount amountPaid) {
-		this.payment.setAmountPaidAndChange(amountPaid);
-		BasketDTO basketDTO = this.basket.getBasketDTO();
-		PaymentDTO paymentDTO = this.payment.getPaymentDTO();
+		payment.setAmountPaidAndChange(amountPaid);
+		BasketDTO basketDTO = basket.getBasketDTO();
+		PaymentDTO paymentDTO = payment.getPaymentDTO();
 		TimeAndDate timeAndDateOfSale = new TimeAndDate();
 		if (customerDTO == null)
 			return new ReceiptDTO(basketDTO, paymentDTO, timeAndDateOfSale);

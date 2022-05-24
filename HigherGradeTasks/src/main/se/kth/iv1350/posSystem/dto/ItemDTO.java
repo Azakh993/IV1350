@@ -30,7 +30,7 @@ public class ItemDTO {
 	 * @return The item identifier
 	 */
 	public String getItemID() {
-		return this.itemID;
+		return itemID;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class ItemDTO {
 	 * @return The item VAT rate
 	 */
 	public Amount getItemVATRate() {
-		return this.itemVATRate;
+		return itemVATRate;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class ItemDTO {
 	 * @return The item description
 	 */
 	public String getItemDescription() {
-		return this.itemDescription;
+		return itemDescription;
 	}
 
 	/**
@@ -61,6 +61,6 @@ public class ItemDTO {
 	 * @return The item price
 	 */
 	public Amount getItemPrice() {
-		return this.itemPrice;
+		return itemPrice;
 	}
 }

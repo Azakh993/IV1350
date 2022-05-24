@@ -15,7 +15,7 @@ public class FileLogger {
 	 */
 	public FileLogger(String filePath) {
 		try {
-			this.textFile = new PrintWriter(new FileWriter(filePath, true), true);
+			textFile = new PrintWriter(new FileWriter(filePath, true), true);
 		} catch (IOException exception) {
 			System.out.println("File could not be created!");
 			exception.printStackTrace();

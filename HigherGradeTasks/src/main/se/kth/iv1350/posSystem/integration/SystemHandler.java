@@ -42,8 +42,8 @@ public class SystemHandler {
 	 * @throws ItemIdentifierException if the registered item identifier is invalid
 	 * @throws ExternalSystemException if the external system cannot be reached
 	 */
-	public ItemDTO fetchItem(String itemID) throws ItemIdentifierException, ExternalSystemException {
-		return this.externalInventorySystem.getItem(itemID);
+	public ItemDTO fetchItem(String itemID) throws ItemIdentifierException {
+		return externalInventorySystem.getItem(itemID);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class SystemHandler {
 	 * @throws CustomerRegistrationException If the provided <code>customerID</code> is not registered
 	 */
 	public CustomerDTO fetchCustomerDTO(String customerID) throws CustomerRegistrationException {
-		return this.customerDatabase.getCustomerDTO(customerID);
+		return customerDatabase.getCustomerDTO(customerID);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class SystemHandler {
 	 * @return The <code>DiscountDTO</code> containing all discounts
 	 */
 	public DiscountDTO fetchDiscounts() {
-		return this.discountDatabase.getDiscountDTO();
+		return discountDatabase.getDiscountDTO();
 	}
 
 	/**
@@ -71,20 +71,20 @@ public class SystemHandler {
 	 * @param receiptDTO The DTO containing all data on a single sale
 	 */
 	public void registerTransaction(ReceiptDTO receiptDTO) {
-		this.cashRegister.setCashInRegister(receiptDTO);
-		this.receiptPrinter.printReceipt(receiptDTO);
+		cashRegister.setCashInRegister(receiptDTO);
+		receiptPrinter.printReceipt(receiptDTO);
 		updateLogs(receiptDTO);
 	}
 
 	private void updateLogs(ReceiptDTO receiptDTO) {
-		this.externalInventorySystem.setItemInventory(receiptDTO);
-		this.externalAccountingSystem.setPaymentRecords(receiptDTO);
-		this.saleLog.setSaleInstance(receiptDTO);
+		externalInventorySystem.setItemInventory(receiptDTO);
+		externalAccountingSystem.setPaymentRecords(receiptDTO);
+		saleLog.setSaleInstance(receiptDTO);
 		notifyObservers();
 	}
 
 	private void notifyObservers() {
-		ReceiptDTO latestReceiptDTO = this.saleLog.getTransactionsList().getLast();
+		ReceiptDTO latestReceiptDTO = saleLog.getTransactionsList().getLast();
 		for (SystemHandlerObserver systemHandlerObserver : systemHandlerObserversList) {
 			systemHandlerObserver.updateLogs(latestReceiptDTO);
 		}
@@ -104,8 +104,8 @@ public class SystemHandler {
 	 * @param systemHandlerObserver The observer to add and to be notified
 	 */
 	public void addSystemHandlerObserver(SystemHandlerObserver systemHandlerObserver) {
-		if (!this.systemHandlerObserversList.contains(systemHandlerObserver)) {
-			this.systemHandlerObserversList.add(systemHandlerObserver);
+		if (!systemHandlerObserversList.contains(systemHandlerObserver)) {
+			systemHandlerObserversList.add(systemHandlerObserver);
 		}
 	}
 }

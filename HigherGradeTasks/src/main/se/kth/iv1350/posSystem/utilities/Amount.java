@@ -20,7 +20,7 @@ public class Amount {
 	 * @return The reference to a new Amount instance representing the result of the addition
 	 */
 	public Amount plus(Amount amountToAdd) {
-		return new Amount(this.amount + amountToAdd.getAmount());
+		return new Amount(amount + amountToAdd.getAmount());
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class Amount {
 	 * @return The value of the stored amount
 	 */
 	public double getAmount() {
-		return this.amount;
+		return amount;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class Amount {
 	 * @return The reference to a new Amount instance representing the result of the multiplication
 	 */
 	public Amount multipliedWith(Amount amountToMultiplyWith) {
-		return new Amount(this.amount * amountToMultiplyWith.getAmount());
+		return new Amount(amount * amountToMultiplyWith.getAmount());
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class Amount {
 	 * @return The reference to a new Amount instance representing the result of the division
 	 */
 	public Amount dividedWith(Amount amountToDivideWith) {
-		return new Amount(this.amount / amountToDivideWith.getAmount());
+		return new Amount(amount / amountToDivideWith.getAmount());
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Amount {
 	 * @return The reference to a new Amount instance representing the result of the subtraction
 	 */
 	public Amount minus(Amount amountToSubtract) {
-		return new Amount(this.amount - amountToSubtract.getAmount());
+		return new Amount(amount - amountToSubtract.getAmount());
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class Amount {
 		if (anObject == null || !(anObject instanceof Amount))
 			return false;
 		Amount anotherAmount = (Amount) anObject;
-		return this.amount == anotherAmount.amount;
+		return amount == anotherAmount.amount;
 	}
 
 	/**
@@ -76,6 +76,6 @@ public class Amount {
 	 * @return String representation of Amount instance
 	 */
 	public String toString() {
-		return String.format("%.2f", this.amount);
+		return String.format("%.2f", amount);
 	}
 }

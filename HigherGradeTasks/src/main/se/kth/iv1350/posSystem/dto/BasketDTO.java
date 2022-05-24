@@ -27,7 +27,7 @@ public class BasketDTO {
 	 * @return The LinkedHashMap of items and their quantity
 	 */
 	public LinkedHashMap<ItemDTO, Amount> getBasket() {
-		return this.itemsInBasket;
+		return itemsInBasket;
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class BasketDTO {
 	 * @return The <code>lastRegisteredItem</code>
 	 */
 	public ItemDTO getLastRegisteredItem() {
-		return this.lastRegisteredItem;
+		return lastRegisteredItem;
 	}
 }
 

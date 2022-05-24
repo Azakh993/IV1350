@@ -61,7 +61,7 @@ public class PaymentDTO {
 	 * @return The running total / total price
 	 */
 	public Amount getTotalPrice() {
-		return this.totalPrice;
+		return totalPrice;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class PaymentDTO {
 	 * @return The total VAT
 	 */
 	public Amount getTotalVAT() {
-		return this.totalVAT;
+		return totalVAT;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class PaymentDTO {
 	 * @return The amount paid in cash
 	 */
 	public Amount getAmountPaid() {
-		return this.amountPaid;
+		return amountPaid;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class PaymentDTO {
 	 * @return The change in cash
 	 */
 	public Amount getChange() {
-		return this.change;
+		return change;
 	}
 
 	public Amount getDiscount() {
