@@ -1,7 +1,10 @@
 package se.kth.iv1350.posSystem.controller;
 
 import se.kth.iv1350.posSystem.dto.*;
-import se.kth.iv1350.posSystem.integration.*;
+import se.kth.iv1350.posSystem.integration.CustomerRegistrationException;
+import se.kth.iv1350.posSystem.integration.ItemIdentifierException;
+import se.kth.iv1350.posSystem.integration.SystemHandler;
+import se.kth.iv1350.posSystem.model.PaymentObserver;
 import se.kth.iv1350.posSystem.model.SaleHandler;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
@@ -13,7 +16,7 @@ import java.util.List;
  */
 public class Controller {
 	private final SystemHandler systemHandler;
-	private final List<SystemHandlerObserver> systemHandlerObserversList = new ArrayList<>();
+	private final List<PaymentObserver> paymentObserversList = new ArrayList<>();
 	private SaleHandler saleHandler;
 
 	/**
@@ -24,12 +27,12 @@ public class Controller {
 	}
 
 	/**
-	 * Marks the start of a sale; adds new <code>SaleLogObservers</code> and initializes a new instance of
-	 * <code>SaleHandler</code>
+	 * Marks the start of a sale;  initializes a new instance of <code>SaleHandler</code> and adds new
+	 * <code>PaymentObserver</code>s
 	 */
 	public void startSale() {
-		systemHandler.addNewSystemHandlerObservers(systemHandlerObserversList);
 		this.saleHandler = new SaleHandler();
+		saleHandler.addPaymentObservers(paymentObserversList);
 	}
 
 	/**
@@ -37,8 +40,8 @@ public class Controller {
 	 * <code>totalPrice</code> and <code>totalVAT</code>
 	 * @param itemID The unique identifier for an item
 	 * @return The latest instance of <code>BasketDTO</code>
-	 * @throws ItemIdentifierException  if provided <code>itemID</code> is invalid
-	 * @throws IllegalStateException    if the method is called before <code>startSale</code>
+	 * @throws ItemIdentifierException if provided <code>itemID</code> is invalid
+	 * @throws IllegalStateException   if the method is called before <code>startSale</code>
 	 */
 	public BasketDTO addItem(String itemID) throws ItemIdentifierException {
 		if (!saleActive())
@@ -111,9 +114,9 @@ public class Controller {
 
 	/**
 	 * Adds the provided observer to the observers list
-	 * @param systemHandlerObserver The observer that should be notified.
+	 * @param paymentObserver The observer that should be notified.
 	 */
-	public void addSaleLogObserver(SystemHandlerObserver systemHandlerObserver) {
-		systemHandlerObserversList.add(systemHandlerObserver);
+	public void addPaymentObserver(PaymentObserver paymentObserver) {
+		paymentObserversList.add(paymentObserver);
 	}
 }
