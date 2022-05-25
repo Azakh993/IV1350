@@ -107,7 +107,7 @@ public class ReceiptDTO {
 		stringBuilder.append("Change ");
 		stringBuilder.append(getChange());
 		stringBuilder.append("\n\n");
-		stringBuilder.append("\tEND OF RECEIPT\n----------------------------------");
+		stringBuilder.append("\tEND OF RECEIPT\n----------------------------------\n");
 		return stringBuilder.toString();
 	}
 
