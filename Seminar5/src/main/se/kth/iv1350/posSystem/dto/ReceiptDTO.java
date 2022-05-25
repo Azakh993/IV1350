@@ -75,39 +75,35 @@ public class ReceiptDTO {
 	 */
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("\n----------------------------------\n");
-		stringBuilder.append("\t\tRECEIPT\n");
+		stringBuilder.append("\t* * * * * * * * RECEIPT * * * * * * * * *\n\t*\t\t\t");
 		stringBuilder.append(getTimeAndDateOfSale().getTimeAndDate());
-		stringBuilder.append("\n\n");
+		stringBuilder.append("\t\t\t*\n\t*\t\t\t\t\t\t\t\t\t\t*\n");
 		for (ItemDTO item : itemsInBasket.keySet()) {
-			stringBuilder.append(String.format("%.0f", itemsInBasket.get(item).getAmount()));
-			stringBuilder.append("*\t");
+			stringBuilder.append(String.format("\t*\t%.0fX\t", itemsInBasket.get(item).getAmount()));
 			stringBuilder.append(item.toString());
-			stringBuilder.append("\n");
+			stringBuilder.append("\t\t*\n");
 		}
-		stringBuilder.append("\nTotal: ");
+		stringBuilder.append("\t*\t\t\t\t\t\t\t\t\t\t*\n\t*\tTotal: ");
 		stringBuilder.append(getTotalPrice());
-		stringBuilder.append("\n");
-		stringBuilder.append("Total VAT: ");
+		stringBuilder.append("\t\t\t\t\t\t*\n\t*\tTotal VAT: ");
 		stringBuilder.append(getTotalVAT());
-		stringBuilder.append("\n");
+		stringBuilder.append("\t\t\t\t\t*\n\t*\t\t\t\t\t\t\t\t\t\t*");
 		if (discount.getAmount() != 0) {
-			stringBuilder.append("\nDiscount: ");
+			stringBuilder.append("\n\t*\tDiscount: ");
 			stringBuilder.append(getDiscount());
-			stringBuilder.append("\nTotal after discount: ");
+			stringBuilder.append("\t\t\t\t\t*\n\t*\tTotal after discount: ");
 			stringBuilder.append(getTotalPriceAfterDiscount());
-			stringBuilder.append("\n");
-			stringBuilder.append("Total VAT: ");
+			stringBuilder.append("\t\t*\n\t*\tTotal VAT: ");
 			stringBuilder.append(getTotalVATAfterDiscount());
-			stringBuilder.append("\n");
+			stringBuilder.append("\t\t\t\t\t*\n\t*\t\t\t\t\t\t\t\t\t\t*");
 		}
-		stringBuilder.append("\nPaid: ");
+		stringBuilder.append("\n\t*\tPaid: ");
 		stringBuilder.append(getAmountPaid());
-		stringBuilder.append("\n");
-		stringBuilder.append("Change ");
+		stringBuilder.append("\t\t\t\t\t\t*\n");
+		stringBuilder.append("\t*\tChange ");
 		stringBuilder.append(getChange());
-		stringBuilder.append("\n\n");
-		stringBuilder.append("\tEND OF RECEIPT\n----------------------------------\n");
+		stringBuilder.append("\t\t\t\t\t\t*\n");
+		stringBuilder.append("\t* * * * * * * * * * * * * * * * * * * * *\n");
 		return stringBuilder.toString();
 	}
 

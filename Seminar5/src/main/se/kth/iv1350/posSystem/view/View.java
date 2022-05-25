@@ -103,7 +103,7 @@ public class View {
 			addItemToBasket("67334553");
 			endSale();
 			addDiscounts("9304050000");
-			registerPayment(300);
+			registerPayment(500);
 		} catch (Exception exception) {
 			logException(exception);
 		}
