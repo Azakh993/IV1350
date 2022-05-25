@@ -11,7 +11,7 @@ import se.kth.iv1350.posSystem.utilities.FileLogger;
  * Represents the only view of the program
  */
 public class View {
-	private final static String LOG_FILE_PATH = "Seminar4/textFiles/log.txt";
+	private final static String LOG_FILE_PATH = "Seminar5/textFiles/log.txt";
 	private final Controller controller;
 	private final OutputFormatter outputFormatter;
 	private final FileLogger exceptionLogger;
@@ -22,9 +22,9 @@ public class View {
 	 */
 	public View(Controller controller) {
 		this.controller = controller;
-		this.controller.addSaleLogObserver(new TotalRevenueView());
-		this.controller.addSaleLogObserver(new TotalRevenueFileOutput());
 		this.outputFormatter = new OutputFormatter();
+		this.controller.addPaymentObserver(new TotalRevenueView());
+		this.controller.addPaymentObserver(new TotalRevenueFileOutput(outputFormatter));
 		this.exceptionLogger = new FileLogger(LOG_FILE_PATH);
 	}
 
