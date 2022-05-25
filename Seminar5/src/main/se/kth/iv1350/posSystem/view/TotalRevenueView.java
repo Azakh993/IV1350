@@ -9,14 +9,14 @@ import se.kth.iv1350.posSystem.utilities.Amount;
 public class TotalRevenueView extends Revenue {
 
 	protected void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue) {
-		System.out.println("\n*************************************************");
-		System.out.println("Revenue at " + timeAndDateOfLastSale + ": " + totalRevenue);
-		System.out.println("*************************************************");
+		System.out.println("\n\t*******************************************");
+		System.out.println("\tRevenue at " + timeAndDateOfLastSale + ": " + totalRevenue);
+		System.out.println("\t*******************************************\n");
 	}
 
 	protected void handleException(Exception exception) {
-		System.out.println("\n*************************************************");
-		System.out.println("Error: Could not get total revenue");
-		System.out.println("*************************************************");
+		System.out.println("\n\t*************************************************");
+		System.out.println("\tError: Could not get total revenue");
+		System.out.println("\t*************************************************");
 	}
 }

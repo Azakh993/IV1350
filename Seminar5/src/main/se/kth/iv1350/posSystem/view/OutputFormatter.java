@@ -12,34 +12,38 @@ import java.io.StringWriter;
 class OutputFormatter {
 
 	void startSalePrinter() {
-		System.out.println("\n\n[startSale()]\t\t\t\t|");
+		System.out.print("\n\n\t-----------------------------------------------------");
+		System.out.println("-----------------------------------------------------");
+		System.out.println("\t[startSale()]\t\t\t\t|");
 	}
 
 	void addIemToBasketPrinter(BasketDTO basketDTO) {
 		ItemDTO lastRegisteredItem = basketDTO.getLastRegisteredItem();
 		String itemIDOfLastRegisteredItem = lastRegisteredItem.getItemID();
 		Amount qtyOfLastRegisteredItem = basketDTO.getBasket().get(lastRegisteredItem);
-		System.out.print("[addItem('" + itemIDOfLastRegisteredItem + "')]\t\t|\t");
+		System.out.print("\t[addItem('" + itemIDOfLastRegisteredItem + "')]\t\t|\t");
 		System.out.print(String.format("%.0f", qtyOfLastRegisteredItem.getAmount()) + "* " + lastRegisteredItem);
 	}
 
 	void runningTotalPrinter(Amount runningTotal) {
-		System.out.printf("\t\t\t\t\t\t\t\t| Running total: " + runningTotal + " |\n");
+		System.out.printf("\t\t\t\t\t| Running total: " + runningTotal + " |\n");
 	}
 
 	void endSalePrinter(Amount totalPrice) {
-		System.out.print("[endSale()]\t\t\t\t\t|\t");
+		System.out.print("\t[endSale()]\t\t\t\t\t|\t");
 		System.out.printf(String.format("Total Price (including VAT): %.2f\n", totalPrice.getAmount()));
 	}
 
 	void addDiscountsPrinter(Amount totalPriceAfterDiscount, String customerID) {
-		System.out.print("[addDiscount(" + customerID + ")]\t|\t");
+		System.out.print("\t[addDiscount(" + customerID + ")]\t|\t");
 		System.out.printf(String.format("Total Price After Discount: %.2f\n", totalPriceAfterDiscount.getAmount()));
 	}
 
 	void registerPaymentPrinter(ReceiptDTO receiptDTO) {
-		System.out.print("[registerPayment(" + receiptDTO.getAmountPaid().getAmount() + ")]\t|\t");
+		System.out.print("\t[registerPayment(" + receiptDTO.getAmountPaid().getAmount() + ")]\t|\t");
 		System.out.println(String.format("Change: %.2f", receiptDTO.getChange().getAmount()));
+		System.out.print("\t-----------------------------------------------------");
+		System.out.println("-----------------------------------------------------");
 	}
 
 	String exceptionLogEntryFormatter(Exception exception) {

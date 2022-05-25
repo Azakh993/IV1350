@@ -35,16 +35,15 @@ public class View {
 		try {
 			startSale();
 			addItemToBasket("95867956");
-			System.out.print("[addItem('1231223" +
-					"')]\t\t|\t");
+			System.out.print("\t[addItem('1231223" + "')]\t\t|\t");
 			addItemToBasket("1231223");
 			addItemToBasket("12312234");
 			addItemToBasket("67334553");
-			System.out.print("[addItem('404')]\t\t\t|\t");
+			System.out.print("\t[addItem('404')]\t\t\t|\t");
 			addItemToBasket("404");
 			addItemToBasket("67334553");
 			endSale();
-			System.out.print("[addDiscount(9304050001)]\t|\t");
+			System.out.print("\t[addDiscount(9304050001)]\t|\t");
 			addDiscounts("9304050001");
 			addDiscounts("9304050000");
 			registerPayment(2500);
