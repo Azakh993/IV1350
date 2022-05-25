@@ -4,6 +4,8 @@ import se.kth.iv1350.posSystem.dto.*;
 import se.kth.iv1350.posSystem.utilities.Amount;
 import se.kth.iv1350.posSystem.utilities.TimeAndDate;
 
+import java.util.List;
+
 /**
  * Class responsible for handling operations associated to sale instances.
  */
@@ -93,5 +95,13 @@ public class SaleHandler {
 		if (customerDTO == null)
 			return new ReceiptDTO(basketDTO, paymentDTO, timeAndDateOfSale);
 		return new ReceiptDTO(basketDTO, paymentDTO, timeAndDateOfSale, customerDTO);
+	}
+
+	/**
+	 * Forwards the <code>PaymentObserver</code>s list to <code>Payment</code>
+	 * @param paymentObserver The observer to add
+	 */
+	public void addPaymentObservers(List<PaymentObserver> paymentObserver) {
+		payment.addNewPaymentObservers(paymentObserver);
 	}
 }
