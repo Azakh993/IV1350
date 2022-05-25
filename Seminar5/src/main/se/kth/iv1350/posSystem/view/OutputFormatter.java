@@ -41,6 +41,7 @@ class OutputFormatter {
 		System.out.print("[registerPayment(" + receiptDTO.getAmountPaid().getAmount() + ")]\t|\t");
 		System.out.println(String.format("Change: %.2f", receiptDTO.getChange().getAmount()));
 	}
+
 	String exceptionLogEntryFormatter(Exception exception) {
 		StringBuilder logEntry = new StringBuilder();
 		TimeAndDate timeAndDateOfException = new TimeAndDate();
