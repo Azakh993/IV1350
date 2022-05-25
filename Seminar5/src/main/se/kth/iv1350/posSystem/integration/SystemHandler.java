@@ -6,9 +6,6 @@ import se.kth.iv1350.posSystem.dto.ItemDTO;
 import se.kth.iv1350.posSystem.dto.ReceiptDTO;
 import se.kth.iv1350.posSystem.utilities.Amount;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents the handler of external systems, databases and the sale log
  */
@@ -20,7 +17,6 @@ public class SystemHandler {
 	private final CashRegister cashRegister;
 	private final ReceiptPrinter receiptPrinter;
 	private final SaleLog saleLog;
-	private final List<SystemHandlerObserver> systemHandlerObserversList = new ArrayList<>();
 
 	/**
 	 * Creates an instance of <code>SystemHandler</code> and registers reference to external systems and logs
@@ -80,32 +76,5 @@ public class SystemHandler {
 		externalInventorySystem.setItemInventory(receiptDTO);
 		externalAccountingSystem.setPaymentRecords(receiptDTO);
 		saleLog.setSaleInstance(receiptDTO);
-		notifyObservers();
-	}
-
-	private void notifyObservers() {
-		ReceiptDTO latestReceiptDTO = saleLog.getTransactionsList().getLast();
-		for (SystemHandlerObserver systemHandlerObserver : systemHandlerObserversList) {
-			systemHandlerObserver.updateLogs(latestReceiptDTO);
-		}
-	}
-
-	/**
-	 * Adds all new observers to the observers list that should be notified
-	 * @param systemHandlerObserversList The list of observers that should be added and notified.
-	 */
-	public void addNewSystemHandlerObservers(List<SystemHandlerObserver> systemHandlerObserversList) {
-		for (SystemHandlerObserver systemHandlerObserver : systemHandlerObserversList)
-			addSystemHandlerObserver(systemHandlerObserver);
-	}
-
-	/**
-	 * Adds a new observer to the observers list that should be notified
-	 * @param systemHandlerObserver The observer to add and to be notified
-	 */
-	public void addSystemHandlerObserver(SystemHandlerObserver systemHandlerObserver) {
-		if (!systemHandlerObserversList.contains(systemHandlerObserver)) {
-			systemHandlerObserversList.add(systemHandlerObserver);
-		}
 	}
 }
