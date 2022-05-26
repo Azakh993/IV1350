@@ -1,0 +1,38 @@
+
+Entries are generated using an adaptation of PrintWriter;
+the method 'println() has been modified to start with a newline.
+
+	* * * * * * * * RECEIPT * * * * * * * * *
+	*			20:18 26-05-2022			*
+	*										*
+	*	1X	Black Keyboard		1499,00		*
+	*	1X	Blue Headphones		799,00		*
+	*	2X	HDMI Cable, 2m		299,00		*
+	*										*
+	*	Total: 2896,00						*
+	*	Total VAT: 724,00					*
+	*										*
+	*	Discount: 409,20					*
+	*	Total after discount: 2486,80		*
+	*	Total VAT: 621,70					*
+	*										*
+	*	Paid: 2500,00						*
+	*	Change 13,20						*
+	* * * * * * * * * * * * * * * * * * * * *
+
+
+Entries are generated using an adaptation of PrintWriter;
+the method 'println() has been modified to start with a newline.
+
+	* * * * * * * * RECEIPT * * * * * * * * *
+	*			20:18 26-05-2022			*
+	*										*
+	*	1X	HDMI Cable, 2m		299,00		*
+	*										*
+	*	Total: 299,00						*
+	*	Total VAT: 74,75					*
+	*										*
+	*	Paid: 500,00						*
+	*	Change 201,00						*
+	* * * * * * * * * * * * * * * * * * * * *
+
