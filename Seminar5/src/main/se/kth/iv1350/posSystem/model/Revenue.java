@@ -8,6 +8,7 @@ import se.kth.iv1350.posSystem.utilities.TimeAndDate;
  */
 public abstract class Revenue implements PaymentObserver {
 	private Amount totalRevenue = new Amount(0);
+	private Amount numberOfTransactions = new Amount(0);
 	private String timeAndDateOfLastSale;
 
 	/**
@@ -16,12 +17,13 @@ public abstract class Revenue implements PaymentObserver {
 	 * @param revenueToAdd The revenue to add to <code>totalRevenue</code>>
 	 */
 	public void setAmountPaidAndChange(Amount revenueToAdd) {
-		updateTimeAndDateOfLastSale();
+		setTimeAndDateOfLastSale();
 		updateTotalRevenue(revenueToAdd);
+		updateNumberOfTransactions();
 		outputUpdatedRevenue();
 	}
 
-	private void updateTimeAndDateOfLastSale() {
+	private void setTimeAndDateOfLastSale() {
 		this.timeAndDateOfLastSale = new TimeAndDate().getTimeAndDate();
 	}
 
@@ -29,15 +31,19 @@ public abstract class Revenue implements PaymentObserver {
 		this.totalRevenue = totalRevenue.plus(revenueToAdd);
 	}
 
+	private void updateNumberOfTransactions() {
+		this.numberOfTransactions = numberOfTransactions.plus(new Amount(1));
+	}
 	private void outputUpdatedRevenue() {
 		try {
-			outputTotalRevenue(timeAndDateOfLastSale, totalRevenue);
+			outputTotalRevenue(timeAndDateOfLastSale, totalRevenue, numberOfTransactions);
 		} catch (Exception exception) {
 			handleException(exception);
 		}
 	}
 
-	protected abstract void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue) throws Exception;
+	protected abstract void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue,
+	                                           Amount numberOfTransactions) throws Exception;
 
 	protected abstract void handleException(Exception exception);
 }
