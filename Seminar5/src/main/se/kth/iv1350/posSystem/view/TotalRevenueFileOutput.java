@@ -17,8 +17,10 @@ public class TotalRevenueFileOutput extends Revenue {
 	}
 
 	@Override
-	protected void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue) {
-		String logEntry = "Revenue at " + timeAndDateOfLastSale + ": " + totalRevenue;
+	protected void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue, Amount numberOfTransactions) {
+		String logEntry =
+				"Revenue at " + timeAndDateOfLastSale + ": " + totalRevenue
+				+ "\nTransactions: " + (int) numberOfTransactions.getAmount() + "\n";
 		fileLogger.addEntryToLog(logEntry);
 	}
 

@@ -8,9 +8,10 @@ import se.kth.iv1350.posSystem.utilities.Amount;
  */
 public class TotalRevenueView extends Revenue {
 
-	protected void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue) {
+	protected void outputTotalRevenue(String timeAndDateOfLastSale, Amount totalRevenue, Amount numberOfTransactions) {
 		System.out.println("\n\t* * * * * * * * * * * * * * * * * * *");
 		System.out.println("\tRevenue at " + timeAndDateOfLastSale + ": " + totalRevenue);
+		System.out.println("\tTransactions: " + (int) numberOfTransactions.getAmount());
 		System.out.println("\t* * * * * * * * * * * * * * * * * * *\n");
 	}
 
