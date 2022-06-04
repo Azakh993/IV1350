@@ -1,2 +1,6 @@
-Revenue at 17:59 25-05-2022: 2486,80
-Revenue at 17:59 25-05-2022: 2785,80
+Revenue at 18:47 04-06-2022: 2486,80
+Transactions: 1
+
+Revenue at 18:47 04-06-2022: 2785,80
+Transactions: 2
+
