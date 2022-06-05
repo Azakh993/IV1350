@@ -15,14 +15,12 @@ class ReceiptPrinter {
 
 	void printReceipt(ReceiptDTO receiptDTO) {
 		try {
+			String description = "Entries are generated using an adaptation of PrintWriter;\n" +
+			"the method 'println() has been modified to start with a newline.\n\n";
 			PrintWriterAdaptationViaComposition compositionAdaptation = new PrintWriterAdaptationViaComposition();
-			compositionAdaptation.println("Entries are generated using an adaptation of PrintWriter;\n" +
-					"the method 'println() has been modified to start with a newline.");
-			compositionAdaptation.println(receiptDTO.toString());
+			compositionAdaptation.println(description + receiptDTO);
 			PrintWriterAdaptationViaInheritance inheritanceAdaptation = new PrintWriterAdaptationViaInheritance();
-			inheritanceAdaptation.println("Entries are generated using an adaptation of PrintWriter;\n" +
-					"the method 'println() has been modified to start with a newline.");
-			inheritanceAdaptation.println(receiptDTO.toString());
+			inheritanceAdaptation.println(description + receiptDTO);
 			inheritanceAdaptation.close();
 		} catch (IOException exception) {
 			exception.printStackTrace();
