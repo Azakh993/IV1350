@@ -1,8 +1,8 @@
 package se.kth.iv1350.posSystem.integration;
 
 import se.kth.iv1350.posSystem.dto.ReceiptDTO;
-import se.kth.iv1350.posSystem.utilities.Task2.PrintWriterAdaptationViaComposition;
-import se.kth.iv1350.posSystem.utilities.Task2.PrintWriterAdaptationViaInheritance;
+import se.kth.iv1350.posSystem.utilities.Task2.PrintlnComposition;
+import se.kth.iv1350.posSystem.utilities.Task2.PrintlnInheritance;
 
 import java.io.IOException;
 
@@ -15,12 +15,12 @@ class ReceiptPrinter {
 
 	void printReceipt(ReceiptDTO receiptDTO) {
 		try {
-			String description = "Entries are generated using an adaptation of PrintWriter;\n" +
-			"the method 'println() has been modified to start with a newline.\n\n";
-			PrintWriterAdaptationViaComposition compositionAdaptation = new PrintWriterAdaptationViaComposition();
-			compositionAdaptation.println(description + receiptDTO);
-			PrintWriterAdaptationViaInheritance inheritanceAdaptation = new PrintWriterAdaptationViaInheritance();
-			inheritanceAdaptation.println(description + receiptDTO);
+			PrintlnComposition compositionAdaptation = new PrintlnComposition();
+			compositionAdaptation.println("String surrounded by newline; adaptation via composition");
+			compositionAdaptation.println(receiptDTO.toString());
+			PrintlnInheritance inheritanceAdaptation = new PrintlnInheritance();
+			inheritanceAdaptation.println("String surrounded by newline; adaptation via inheritance");
+			inheritanceAdaptation.println(receiptDTO.toString());
 			inheritanceAdaptation.close();
 		} catch (IOException exception) {
 			exception.printStackTrace();
