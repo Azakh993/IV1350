@@ -8,7 +8,7 @@ import java.io.PrintWriter;
  * Adaptation of PrintWriter via composition; string printed using 'println' starts and ends
  * with a newline.
  */
-public class PrintWriterAdaptationViaComposition {
+public class PrintlnComposition {
 	private final static String FILE_PATH = "Seminar5/textFiles/receiptViaCompositionAdaptation.txt";
 	private final PrintWriter printWriter;
 
@@ -17,7 +17,7 @@ public class PrintWriterAdaptationViaComposition {
 	 * and stores the reference.
 	 * @throws IOException If the file at specified <code>FILE_PATH</code> could not be created
 	 */
-	public PrintWriterAdaptationViaComposition() throws IOException{
+	public PrintlnComposition() throws IOException{
 		printWriter = new PrintWriter(new FileWriter(FILE_PATH, true), true);
 	}
 

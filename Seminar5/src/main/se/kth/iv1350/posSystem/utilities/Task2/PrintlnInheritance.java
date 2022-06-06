@@ -8,7 +8,7 @@ import java.io.PrintWriter;
  * Adaptation of PrintWriter via inheritance; string printed using 'println' starts and ends
  * with a newline.
  */
-public class PrintWriterAdaptationViaInheritance extends PrintWriter {
+public class PrintlnInheritance extends PrintWriter {
 	private final static String FILE_PATH = "Seminar5/textFiles/receiptViaInheritanceAdaptation.txt";
 
 	/**
@@ -16,7 +16,7 @@ public class PrintWriterAdaptationViaInheritance extends PrintWriter {
 	 * using a super class constructor.
 	 * @throws IOException If the file at specified <code>FILE_PATH</code> could not be created
 	 */
-	public PrintWriterAdaptationViaInheritance() throws IOException{
+	public PrintlnInheritance() throws IOException{
 		super(new FileWriter(FILE_PATH, true), true);
 	}
 
