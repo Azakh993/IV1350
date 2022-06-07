@@ -1,0 +1,5 @@
+
+This is the output of the 'println' method adaptation via Inheritance
+
+Normally, println only adds a newline after the provided string.
+The adaptation, however, adds a newline before each string as well.
