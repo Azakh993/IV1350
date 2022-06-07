@@ -1,4 +1,4 @@
-package se.kth.iv1350.posSystem.utilities.Task2;
+package se.kth.iv1350.adaptations;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.io.PrintWriter;
  * with a newline.
  */
 public class PrintlnComposition {
-	private final static String FILE_PATH = "Seminar5/textFiles/receiptViaCompositionAdaptation.txt";
+	private final static String FILE_PATH = "Seminar5/textFiles/printlnViaComposition.txt";
 	private final PrintWriter printWriter;
 
 	/**
