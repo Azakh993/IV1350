@@ -1,9 +1,5 @@
-
-Entries are generated using an adaptation of PrintWriter;
-the method 'println() has been modified to start with a newline.
-
 	* * * * * * * * RECEIPT * * * * * * * * *
-	*			20:18 26-05-2022			*
+	*			22:17 06-06-2022			*
 	*										*
 	*	1X	Black Keyboard		1499,00		*
 	*	1X	Blue Headphones		799,00		*
@@ -20,12 +16,8 @@ the method 'println() has been modified to start with a newline.
 	*	Change 13,20						*
 	* * * * * * * * * * * * * * * * * * * * *
 
-
-Entries are generated using an adaptation of PrintWriter;
-the method 'println() has been modified to start with a newline.
-
 	* * * * * * * * RECEIPT * * * * * * * * *
-	*			20:18 26-05-2022			*
+	*			22:17 06-06-2022			*
 	*										*
 	*	1X	HDMI Cable, 2m		299,00		*
 	*										*
