@@ -1,15 +1,26 @@
-# Course contents
+# Object-Oriented Point of Sale (POS) Application
 
-## Examples of fields that are treated:
-* Object-oriented design and design pattern  
-* Architecture and architectural patterns  
-* Guidelines for object-oriented programming for example refactoring and unit testing 
-* UML (Unified Modeling Language)  
-* Object-oriented analysis  
+## Course Overview
+This repository contains the development journey of a Point of Sale (POS) application, designed and developed as part of the Object Oriented Design course offered by KTH Royal Institute of Technology. The course is structured around five seminars, each focusing on a critical phase of software development: Analysis, Design, Implementation, Exception Handling & Design Patterns, and Improvement Opportunities.
 
-# Intended learning outcomes
+## Seminar Contributions
 
-## After passing the course, the student shall be able to: 
-* develop an object-oriented programme by applying established guidelines for object-oriented architecture, design and programming
-* discuss the quality of a programme and then refer to established guidelines for object-oriented architecture, design and programming
-* interpret and clarify a given specification by applying established guidelines for analysis. 
+### Seminar 1: Analysis
+- **Objective**: Interpret and clarify the given specifications by creating a domain model and system sequence diagram.
+- **Outcome**: `DomainModel.jpg`, `SystemSequenceDiagram.jpg`
+
+### Seminar 2: Design
+- **Objective**: Develop the architecture and design of the POS application, applying established object-oriented design principles.
+- **Outcome**: `ClassDiagram.jpg`, `inputAmountPaid().jpg`, `inputQty().jpg`, `requestDiscount().jpg`, `scanItem().jpg`, `startNewSale().jpg`, `startup().jpg`
+
+### Seminar 3: Implementation
+- **Objective**: Program and test the system, focusing on the core functionalities of the POS application.
+- **Outcome**: Source code files, tests.
+
+### Seminar 4: Exceptions and Design Patterns
+- **Objective**: Enhance the application by implementing exception handling and utilizing design patterns.
+- **Outcome**: Updated source code demonstrating exception handling and pattern usage.
+
+### Seminar 5: Inheritence vs Composition
+- **Objective**: Delve into the object-oriented principles of inheritance and composition by adapting a class from the Java libraries
+- **Outcome**: Source code files, output files demonstrating functionality.
